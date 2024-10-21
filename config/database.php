@@ -10,4 +10,3 @@ try {
 } catch (PDOException $e) {
     echo "Помилка підключення: " . $e->getMessage();
 }
-?>
