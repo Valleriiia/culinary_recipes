@@ -23,6 +23,7 @@
         <div class="login-container">
             <div class="image-side">
                 <img src="/images/pancakes.jpg" alt="Pancakes" style="width: 100%; height: 100%; object-fit: cover;"> 
+            </div>
             <div class="form-side">
                 <div class="login-box">
 
