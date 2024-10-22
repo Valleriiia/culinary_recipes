@@ -50,7 +50,8 @@ body {
     align-items: center;
 }
 
-.login-box {
+.login-box,
+.register-box {
     width: 100%;
     max-width: 400px;
     text-align: center;
@@ -138,7 +139,8 @@ h1 {
     font-size: 16px; 
 }
 
-.login-btn {
+.login-btn,
+.register-btn {
     width: 100%;
     padding: 12px;
     border: none;
@@ -147,22 +149,37 @@ h1 {
     color: white;
     font-size: 18px; 
     cursor: pointer;
-    margin-top: 20px;
+    margin-top: 30px;
 }
 
-.login-btn:hover {
+.login-btn:hover,
+.register-btn:hover {
     background-color: #004d00;
 }
 
-.signup-link {
+.signup-link,
+.login-link {
     margin-top: 20px;
 }
 
-.signup-link a {
+.signup-link a,
+.login-link a {
     color: #006400;
     text-decoration: none;
 }
 
-.signup-link a:hover {
+.signup-link a:hover,
+.login-link a:hover {
     text-decoration: underline;
+}
+
+.login-box, .register-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-box form, .register-box form {
+    width: 100%;
 }
