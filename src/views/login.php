@@ -22,8 +22,7 @@
     <div class="login-page">
         <div class="login-container">
             <div class="image-side">
-                <img src="/images/pancakes.jpg" alt="Pancakes" style="width: 100%; height: 100%; object-fit: cover;"> <!-- Відновлення зображення -->
-            </div>
+                <img src="/images/pancakes.jpg" alt="Pancakes" style="width: 100%; height: 100%; object-fit: cover;"> 
             <div class="form-side">
                 <div class="login-box">
 
