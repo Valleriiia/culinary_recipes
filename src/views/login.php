@@ -1,110 +1,78 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Вхід | Kitchen Tales</title>
-    <link rel="stylesheet" href="/public/CSS/style.css"> 
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"> <!-- Шрифт -->
-    <script>
-        function showRegistration() {
-            document.getElementById('login-form').style.display = 'none';
-            document.getElementById('register-form').style.display = 'block';
-        }
-
-        function showLogin() {
-            document.getElementById('register-form').style.display = 'none';
-            document.getElementById('login-form').style.display = 'block';
-        }
-    </script>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Andev web - Перевірка форми</title>
+    <link rel="stylesheet" href="/public/css/style.css" />
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+    />
 </head>
 <body>
-    <div class="login-page">
-        <div class="login-container">
-            <div class="image-side">
-                <img src="/images/pancakes.jpg" alt="Pancakes" style="width: 100%; height: 100%; object-fit: cover;"> 
-            </div>
-            <div class="form-side">
-                <div class="login-box">
+    <div class="container" id="container">
+        <div class="form-container register-container">
+            <form id="register-form" method="POST" action="/public/login.php"> 
+                <h1>Реєстрація</h1>
+                <div class="form-control">
+                    <input type="text" id="username" name="username" placeholder="Ім'я" required />
+                </div>
+                <div class="form-control">
+                    <input type="email" id="register-email" name="email" placeholder="Електронна пошта" required />
+                </div>
+                <div class="form-control">
+                    <input type="password" id="register-password" name="password" placeholder="Пароль" required />
+                </div>
+                <button type="submit" name="register">Зареєструватись</button>
+            </form>
+        </div>
 
-                    <div id="login-form">
-                        <h1 class="login-title">Вхід</h1>
+        <div class="form-container login-container">
+            <form id="login-form" method="POST" action="/public/login.php">
+                <h1>Вхід</h1>
+                <div class="form-control">
+                    <input type="email" name="email" placeholder="Електронна пошта" required />
+                </div>
+                <div class="form-control">
+                    <input type="password" name="password" placeholder="Пароль" required />
+                </div>
+                <button type="submit" name="login" class="login-button">Увійти</button>
 
-                        <?php if (!empty($message)): ?>
-                            <p><?php echo htmlspecialchars($message); ?></p>
-                        <?php endif; ?>
+                <div class="social-container">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-google"></i></a>
+                </div>
+            </form>
+        </div>
 
-                        <div class="social-login">
-                            <button class="social-btn facebook-btn">
-                                <img src="/public/images/facebook-icon.png" alt="Facebook"> Увійти через Facebook
-                            </button>
-                            <button class="social-btn google-btn">
-                                <img src="/public/images/google-icon.png" alt="Google"> Увійти через Google
-                            </button>
-                        </div>
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                    <h1 class="title">Час готувати шедеври!</h1>
+                    <p>Якщо у вас є обліковий запис, увійдіть сюди та діліться своїми рецептами!</p>
+                    <button class="ghost" id="login">
+                        Увійти
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                </div>
 
-                        <div class="separator">
-                            <span>АБО</span>
-                        </div>
-
-                        <form method="post" action="">
-                            <div class="input-group">
-                                <label for="email">E-mail адреса</label>
-                                <input type="email" id="email" name="email" placeholder="Введіть свій e-mail" required>
-                            </div>
-
-                            <div class="input-group">
-                                <label for="password">Пароль</label>
-                                <input type="password" id="password" name="password" placeholder="Введіть пароль" required>
-                            </div>
-
-                            <button type="submit" name="login" class="login-btn">Увійти</button>
-                        </form>
-
-                        <p class="signup-link">Не маєте акаунту? <a href="javascript:void(0);" onclick="showRegistration()">Зареєструватися</a></p>
-                    </div>
-
-                    <div id="register-form" style="display:none;">
-                        <h1 class="login-title">Реєстрація</h1>
-
-                        <div class="social-login">
-                            <button class="social-btn facebook-btn">
-                                <img src="/public/images/facebook-icon.png" alt="Facebook"> Зареєструватися через Facebook
-                            </button>
-                            <button class="social-btn google-btn">
-                                <img src="/public/images/google-icon.png" alt="Google"> Зареєструватися через Google
-                            </button>
-                        </div>
-
-                        <div class="separator">
-                            <span>АБО</span>
-                        </div>
-
-                        <form method="post" action="">
-                            <div class="input-group">
-                                <label for="username">Ім'я користувача</label>
-                                <input type="text" id="username" name="username" placeholder="Введіть ваше ім'я" required>
-                            </div>
-
-                            <div class="input-group">
-                                <label for="email">E-mail адреса</label>
-                                <input type="email" id="email" name="email" placeholder="Введіть свій e-mail" required>
-                            </div>
-
-                            <div class="input-group">
-                                <label for="password">Пароль</label>
-                                <input type="password" id="password" name="password" placeholder="Введіть пароль" required>
-                            </div>
-
-                            <button type="submit" name="register" class="login-btn">Зареєструватися</button>
-                        </form>
-
-                        <p class="signup-link">Вже маєте акаунт? <a href="javascript:void(0);" onclick="showLogin()">Увійти</a></p>
-                    </div>
-
+                <div class="overlay-panel overlay-right">
+                    <h1 class="title">Спробуйте нові смаки та ідеї!</h1>
+                    <p>Якщо у вас ще немає облікового запису, реєструйтесь та відкрийте для себе безліч смачних рецептів!</p>
+                    <button class="ghost" id="register">
+                        Зареєструватись
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
                 </div>
             </div>
         </div>
     </div>
+
+    <script src="/public/js/scripts.js"></script>
 </body>
 </html>
