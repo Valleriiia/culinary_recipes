@@ -10,10 +10,14 @@ if (!isset($_SESSION['user_name'])) {
     exit;
 }
 
+$userId = $_SESSION['user_id'];
+$message = '';
+
 if (isset($_POST['update_profile'])) {
-    $userId = $_SESSION['user_id'];
     $newUsername = $_POST['new_username'];
-    $profilePhotoPath = null;
+
+    $currentProfilePhoto = $userController->getUserProfile($userId);
+    $profilePhotoPath = $currentProfilePhoto;
 
     if (isset($_FILES['profile_photo']) && $_FILES['profile_photo']['error'] === UPLOAD_ERR_OK) {
         $uploadDir = __DIR__ . '/../images/profile_photos/';
@@ -22,11 +26,15 @@ if (isset($_POST['update_profile'])) {
         $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
 
         if (in_array($fileExt, $allowedExtensions)) {
-            $newFileName = uniqid('profile_', true) . '.' . $fileExt; 
+            $newFileName = uniqid('profile_', true) . '.' . $fileExt;
             $uploadFile = $uploadDir . $newFileName;
 
             if (move_uploaded_file($_FILES['profile_photo']['tmp_name'], $uploadFile)) {
                 $profilePhotoPath = '/images/profile_photos/' . $newFileName;
+
+                if (file_exists(__DIR__ . '/../' . $currentProfilePhoto)) {
+                    unlink(__DIR__ . '/../' . $currentProfilePhoto);
+                }
             }
         }
     }
@@ -38,6 +46,7 @@ if (isset($_POST['update_profile'])) {
     header('Location: user.php');
     exit;
 }
+
 if (isset($_POST['change_password'])) {
     $userId = $_SESSION['user_id'];
     $currentPassword = $_POST['current_password'];

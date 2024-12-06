@@ -27,24 +27,20 @@ class User {
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
         $stmt = $this->pdo->prepare("INSERT INTO users (name, email, password) VALUES (?, ?, ?)");
         $stmt->execute([$name, $email, $hashedPassword]);
-
+        
         return 'Реєстрація успішна! Ви можете увійти на сайт.';
     }
-
     public function updateUsername($userId, $newName) {
         $stmt = $this->pdo->prepare("UPDATE users SET name = ? WHERE id = ?");
         return $stmt->execute([$newName, $userId]);
     }
 
     public function updateProfilePhoto($userId, $photoPath) {
-        $stmt = $this->pdo->prepare("SELECT profile_photo FROM users WHERE id = ?");
-        $stmt->execute([$userId]);
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($user['profile_photo'] && file_exists(__DIR__ . '/../' . $user['profile_photo'])) {
-            unlink(__DIR__ . '/../' . $user['profile_photo']);
+        if (empty($photoPath)) {
+            $photoPath = '/images/default_profile.png';
         }
-
+    
         $stmt = $this->pdo->prepare("UPDATE users SET profile_photo = ? WHERE id = ?");
         return $stmt->execute([$photoPath, $userId]);
     }

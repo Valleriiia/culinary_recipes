@@ -367,8 +367,10 @@
             <img src="\images\LOGO.png" alt="Кошик" width="115" height="60">
         </a>
         <nav class="main-nav">
-            <a href="#">Рецепти</a>
-            <a href="#">Про нас</a>
+        <a href="#">Рецепти</a>
+        <a href="#">Популярні</a>
+        <a href="#">Інгредієнти</a>
+        <a href="#">Страви</a>
         </nav>
         <div class="right-nav">
         <div class="nav-icons">
@@ -392,12 +394,6 @@
         </div>
     </div>
 </header>
-
-<div class="sub-menu">
-    <a href="#">Популярні</a>
-    <a href="#">Інгредієнти</a>
-    <a href="#">Страви</a>
-</div>
 
 <div class="content-wrapper">
     <aside class="sidebar">

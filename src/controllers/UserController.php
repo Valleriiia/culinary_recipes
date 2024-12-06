@@ -64,9 +64,8 @@ class UserController {
         $stmt = $this->pdo->prepare("SELECT profile_photo FROM users WHERE id = ?");
         $stmt->execute([$userId]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $user['profile_photo'] ?? '/images/default_profile.png'; 
+        return $user['profile_photo'];
     }
-
     public function changeUserPassword($userId, $currentPassword, $newPassword) {
         if (empty($newPassword)) {
             return "Новий пароль не може бути порожнім.";

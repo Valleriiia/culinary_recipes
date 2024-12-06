@@ -7,9 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-
-
-* {
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -91,29 +89,6 @@
             font-size: 20px;
         }
 
-        .sub-menu {
-            background: white;
-            padding: 10px 20px;
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            border-bottom: 1px solid #ddd;
-            position: sticky;
-            top: 79px; 
-            z-index: 99;
-        }
-
-        .sub-menu a {
-            color: var(--text-color);
-            text-decoration: none;
-            font-size: 14px;
-            transition: color 0.3s ease;
-        }
-
-        .sub-menu a:hover {
-            color: var(--primary-color);
-        }
-
         .dropdown {
             display: inline-block;
             position: relative;
@@ -164,7 +139,9 @@
 
         footer a:hover {
             text-decoration: underline;
-        } .login-btn {
+        }
+
+        .login-btn {
             background-color: var(--primary-color);
             color: white;
             border: none;
@@ -192,7 +169,8 @@
             </a>
             <nav class="main-nav">
                 <a href="#">Рецепти</a>
-                <a href="#">Про нас</a>
+                <a href="#">Інгредієнти</a>
+                <a href="#">Страви</a>
             </nav>
             <div class="right-nav">
                 <div class="nav-icons">
@@ -220,12 +198,6 @@
             </div>
         </div>
     </header>
-
-    <div class="sub-menu">
-        <a href="#">Популярні</a>
-        <a href="#">Інгредієнти</a>
-        <a href="#">Страви</a>
-    </div>
 
     <main>
         <p>Ласкаво просимо на сайт!</p>
