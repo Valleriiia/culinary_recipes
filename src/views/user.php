@@ -28,12 +28,13 @@
             overflow-y: auto; 
             height: 100vh;
             margin: 0;
+            zoom: 1.1;
         }
 
         header {
             background: white;
             border-bottom: 1px solid #e5e5e5;
-            padding: 9px 20px;
+            padding: 5px 20px;
             position: sticky;
             top: 0;
             z-index: 100;
@@ -53,6 +54,7 @@
             color: var(--text-color);
             font-weight: bold;
             font-size: 20px;
+            padding-left: 50px;
         }
 
         .main-nav {
@@ -75,12 +77,14 @@
 
         .nav-icons {
             display: flex;
-            gap: 15px;
+            gap: 25px;
+            padding-right: 50px;
         }
 
         .nav-icons a {
             color: var(--text-color);
             font-size: 20px;
+            margin-right: 5px;
         }
 
         .sub-menu {
@@ -162,7 +166,7 @@
         }
 
         .profile-menu li:hover {
-            background: #465a48;
+            background: #778B7A;
         }
 
         .page-title {
@@ -335,7 +339,7 @@
     position: absolute;
     background-color: white; 
     min-width: 130px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     z-index: 1;
     right: 0;
     border-radius: 4px;
@@ -357,6 +361,9 @@
 .dropdown:hover .dropdown-menu {
     display: block;
 }
+.nav-icons a {
+    text-decoration: none; 
+}
 
     </style>
 </head>
@@ -368,7 +375,6 @@
         </a>
         <nav class="main-nav">
         <a href="#">Рецепти</a>
-        <a href="#">Популярні</a>
         <a href="#">Інгредієнти</a>
         <a href="#">Страви</a>
         </nav>
@@ -376,10 +382,10 @@
         <div class="nav-icons">
     <div class="dropdown">
     <a href="#" title="Профіль">
-        <img src="\svg\3.svg" alt="Профіль" width="30" height="30">
+        <img src="\svg\3.svg"  width="30" height="30">
     </a>
         <a href="#" class="dropdown-toggle" title="Меню профілю">
-            <img src="\svg\1.svg" alt="Закладки" width="40" height="30">
+            <img src="\svg\1.svg"  width="40" height="30">
         </a>
         <div class="dropdown-menu">
             <a href="#" class="dropdown-item">Мій профіль</a>
