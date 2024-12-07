@@ -381,10 +381,7 @@
         <div class="right-nav">
         <div class="nav-icons">
     <div class="dropdown">
-    <a href="#" title="Профіль">
-        <img src="\svg\3.svg"  width="30" height="30">
-    </a>
-        <a href="#" class="dropdown-toggle" title="Меню профілю">
+        <a href="#" class="dropdown-toggle" title=" ">
             <img src="\svg\1.svg"  width="40" height="30">
         </a>
         <div class="dropdown-menu">
