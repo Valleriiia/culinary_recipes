@@ -271,6 +271,17 @@
 
     <main>
         <p>Ласкаво просимо на сайт!</p>
+        <ul>
+    <?php if (!empty($categories)): ?>
+        <?php foreach ($categories as $category): ?>
+            <li>
+                <a href="/public/category.php?id=<?= $category['id']; ?>"><?= htmlspecialchars($category['name']); ?></a>
+            </li>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <p>Категорій не знайдено.</p>
+    <?php endif; ?>
+</ul>
     </main>
 
     <footer>

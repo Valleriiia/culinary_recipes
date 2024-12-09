@@ -16,7 +16,7 @@ class Category {
 
     // Отримання всіх категорій
     public function getAllCategories() {
-        $stmt = $this->pdo->query("SELECT * FROM categories ORDER BY name ASC");
+        $stmt = $this->pdo->query("SELECT * FROM categories");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 

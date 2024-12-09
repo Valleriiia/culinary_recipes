@@ -6,7 +6,7 @@
     <title>Результати пошуку</title>
 </head>
 <body>
-    <form action="/dashboard/recipes/public/search.php" method="GET">
+    <form action="/public/search.php" method="GET">
         <input type="text" name="q" placeholder="Пошук рецептів">
         <button type="submit">Знайти</button>
     </form>
@@ -16,7 +16,7 @@
         <ul>
             <?php foreach ($results as $recipe): ?>
                 <li>
-                    <a href="/recipe.php?id=<?= htmlspecialchars($recipe['id']) ?>">
+                    <a href="/public/recipe.php?id=<?= htmlspecialchars($recipe['id']) ?>">
                         <?= htmlspecialchars($recipe['name']) ?>
                     </a>
                     <p><?= htmlspecialchars(substr($recipe['description'], 0, 100)) ?>...</p>
@@ -27,6 +27,6 @@
         <p>За вашим запитом нічого не знайдено.</p>
     <?php endif; ?>
 
-    <a href="/">Повернутися на головну</a>
+    <a href="/public/index.php">Повернутися на головну</a>
 </body>
 </html>

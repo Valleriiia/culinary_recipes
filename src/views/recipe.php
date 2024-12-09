@@ -9,7 +9,7 @@
 <body>
     <header>
         <a href="/"><img src="/public/images/logo.png" alt="Логотип"></a>
-        <form action="/dashboard/recipes/public/search.php" method="GET">
+        <form action="/public/search.php" method="GET">
             <input type="text" name="q" placeholder="Пошук рецептів">
             <button type="submit">Знайти</button>
         </form>
