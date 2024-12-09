@@ -28,12 +28,13 @@
             overflow-y: auto; 
             height: 100vh;
             margin: 0;
+            zoom: 1.1;
         }
 
         header {
             background: white;
             border-bottom: 1px solid #e5e5e5;
-            padding: 9px 20px;
+            padding: 5px 20px;
             position: sticky;
             top: 0;
             z-index: 100;
@@ -53,8 +54,8 @@
             color: var(--text-color);
             font-weight: bold;
             font-size: 20px;
+            padding-left: 50px;
         }
-
         .main-nav {
             display: flex;
             gap: 30px;
@@ -80,48 +81,48 @@
 
         .nav-icons {
             display: flex;
-            gap: 15px;
-            position: relative;
+            gap: 25px;
+            padding-right: 50px;
         }
+
 
         .nav-icons a {
             color: var(--text-color);
             font-size: 20px;
+            margin-right: 5px;
         }
-
         .dropdown {
-            display: inline-block;
-            position: relative;
-        }
+    display: inline-block;
+    position: relative;
+}
 
-        .dropdown-menu {
-            display: none;
-            position: absolute;
-            background-color: white; 
-            min-width: 130px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
-            right: 0;
-            border-radius: 4px;
-            padding: 8px 0;
-        }
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: white; 
+    min-width: 130px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    right: 0;
+    border-radius: 4px;
+    padding: 8px 0;
+}
 
-        .dropdown-menu a {
-            color: black; 
-            padding: 8px 16px;
-            text-decoration: none;
-            display: block;
-            font-size: 14px;
-        }
+.dropdown-menu a {
+    color: black; 
+    padding: 8px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 14px;
+}
 
-        .dropdown-menu a:hover {
-            background-color: #f0f0f0; 
-        }
+.dropdown-menu a:hover {
+    background-color: #f0f0f0; 
+}
 
-        .dropdown:hover .dropdown-menu {
-            display: block;
-        }
-
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
         footer {
             background: #2F5333;
             color: white;
@@ -159,6 +160,68 @@
         .logout-form {
             display: inline-block;
         }
+
+        .hero-section {
+    position: relative;
+    text-align: center;
+    padding: 40px 20px;
+    color: white;
+    height: 55vh; 
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('/images/Food.jpg') no-repeat center center/cover;
+    z-index: -1;
+    opacity: 1;
+}
+
+.hero-section .darkener-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('/images/Darkener.png') no-repeat center center/cover;
+    z-index: -1;
+}
+
+
+.hero-section h1 {
+    font-size: 32px;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); 
+    margin-top: 60px;
+}
+
+.hero-section .search-bar {
+    display: inline-block;
+    width: 80%;
+    max-width: 600px;
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 30px;
+    background-color: white;
+    margin-top: 30px; 
+}
+
+
+        .hero-section .search-bar input {
+            width: 100%;
+            padding: 12px 20px;
+            border-radius: 20px;
+            border: 1px solid #ddd;
+        }
+
+        html {
+    scrollbar-width: thin;
+    scrollbar-color: #999 #f7fafc;
+}
     </style>
 </head>
 <body>
@@ -176,9 +239,6 @@
                 <div class="nav-icons">
                     <div class="dropdown">
                         <?php if (isset($isLoggedIn) && $isLoggedIn): ?>
-                            <a href="#" title="Профіль">
-                                <img src="\svg\3.svg" alt="Профіль" width="30" height="30">
-                            </a>
                             <a href="#" class="dropdown-toggle" title="Меню профілю">
                                 <img src="\svg\1.svg" alt="Закладки" width="40" height="30">
                             </a>
@@ -198,6 +258,16 @@
             </div>
         </div>
     </header>
+
+    <div class="hero-section">
+    <h1>Заряджайте своє тіло та душу – знаходьте рецепти, що неймовірно смакують!</h1>
+    <div class="search-bar">
+        <input type="text" placeholder="Пошук за стравою, інгредієнтами...">
+    </div>
+    <div class="darkener-overlay"></div>
+</div>
+
+    
 
     <main>
         <p>Ласкаво просимо на сайт!</p>

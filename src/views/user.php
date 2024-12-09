@@ -364,39 +364,44 @@
 .nav-icons a {
     text-decoration: none; 
 }
+html {
+    scrollbar-width: thin;
+    scrollbar-color: #999 #f7fafc;
+}
 
     </style>
 </head>
 <body>
 <header>
     <div class="navbar">
-        <a href="#" class="logo">
+        <a href="/" class="logo">
             <img src="\images\LOGO.png" alt="Кошик" width="115" height="60">
         </a>
         <nav class="main-nav">
-        <a href="#">Рецепти</a>
-        <a href="#">Інгредієнти</a>
-        <a href="#">Страви</a>
+            <a href="/" class="main-nav-link">Рецепти</a>
+            <a href="#" class="main-nav-link">Інгредієнти</a>
+            <a href="#" class="main-nav-link">Страви</a>
         </nav>
         <div class="right-nav">
-        <div class="nav-icons">
-    <div class="dropdown">
-        <a href="#" class="dropdown-toggle" title=" ">
-            <img src="\svg\1.svg"  width="40" height="30">
-        </a>
-        <div class="dropdown-menu">
-            <a href="#" class="dropdown-item">Мій профіль</a>
-            <a href="#" class="dropdown-item" id="logout-link">Вийти</a>
-</div>
+            <div class="nav-icons">
+                <div class="dropdown">
+                    <a href="#" class="dropdown-toggle" title=" ">
+                        <img src="\svg\1.svg" width="40" height="30">
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="#" class="dropdown-item">Мій профіль</a>
+                        <a href="#" class="dropdown-item" id="logout-link">Вийти</a>
+                    </div>
 
-<form id="logout-form" action="/public/user.php" method="POST" style="display: none;">
-    <input type="hidden" name="logout" value="true">
-</form>
-        </div>
-    </div>
+                    <form id="logout-form" action="/public/user.php" method="POST" style="display: none;">
+                        <input type="hidden" name="logout" value="true">
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </header>
+
 
 <div class="content-wrapper">
     <aside class="sidebar">
