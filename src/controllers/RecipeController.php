@@ -19,6 +19,9 @@ class RecipeController {
 
     public function showRecipe($recipeId) {
         $recipe = $this->recipeModel->getRecipeById($recipeId);
+        $ratings = $this->recipeModel->getRatings($recipeId);
+        $reviews = $this->recipeModel->getReviews($recipeId);
+        $ingredients = $this->recipeModel->getIngredients($recipeId);
         include __DIR__ . '/../views/recipe.php';
     }
 
