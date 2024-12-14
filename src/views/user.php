@@ -458,7 +458,7 @@ html {
                         <input type="password" id="new_password" name="new_password" placeholder="Введіть новий пароль" required>
                     </div>
                     <div class="form-group">
-                        <label for="confirm_password">Підтвердження паролю</label>
+                        <label for="confirm_password">Підтвердження паролю.</label>
                         <input type="password" id="confirm_password" name="confirm_password" placeholder="Підтвердіть новий пароль" required>
                     </div>
                 </div>
