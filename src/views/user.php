@@ -384,14 +384,18 @@ html {
         </nav>
         <div class="right-nav">
             <div class="nav-icons">
-                <div class="dropdown">
-                    <a href="#" class="dropdown-toggle" title=" ">
-                        <img src="\svg\1.svg" width="40" height="30">
-                    </a>
-                    <div class="dropdown-menu">
-                        <a href="#" class="dropdown-item">Мій профіль</a>
-                        <a href="#" class="dropdown-item" id="logout-link">Вийти</a>
-                    </div>
+    <div class="dropdown">
+        <a href="#" class="dropdown-toggle" title="Перехід до збережених рецептів" id="openUserPage">
+            <img src="\svg\2.svg" width="40" height="30">
+            <img src="\svg\1.svg" width="40" height="30">
+        </a>
+        <div class="dropdown-menu">
+            <a href="#" class="dropdown-item">Мій профіль</a>
+            <a href="#" class="dropdown-item" id="logout-link">Вийти</a>
+        </div>
+    </div>
+</div>
+
 
                     <form id="logout-form" action="/public/user.php" method="POST" style="display: none;">
                         <input type="hidden" name="logout" value="true">
@@ -511,6 +515,12 @@ html {
     event.preventDefault(); 
     document.querySelector('#logout-form').submit(); 
 });
+
+document.getElementById('openUserPage').addEventListener('click', function(event) {
+    event.preventDefault(); // Запобігає стандартному переходу за посиланням
+    window.open('user.php', '_blank'); // Відкриває нову вкладку на сторінку user.php
+});
+
 </script>
 
 <footer>

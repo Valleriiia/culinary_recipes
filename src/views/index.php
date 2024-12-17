@@ -240,7 +240,8 @@
                     <div class="dropdown">
                         <?php if (isset($isLoggedIn) && $isLoggedIn): ?>
                             <a href="#" class="dropdown-toggle" title="Меню профілю">
-                                <img src="\svg\1.svg" alt="Закладки" width="40" height="30">
+                                <img src="\svg\2.svg" width="40" height="30">
+                                <img src="\svg\1.svg" width="40" height="30">
                             </a>
                             <div class="dropdown-menu">
                                 <a href="#" class="dropdown-item">Мій профіль</a>
