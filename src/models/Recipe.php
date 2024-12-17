@@ -20,13 +20,13 @@ class Recipe {
     }
 
     public function getRatings($recipeId) {
-        $stmt = $this->pdo->prepare("SELECT AVG(rating) as average, COUNT(rating) as count FROM ratings WHERE id_recipe = ?");
+        $stmt = $this->pdo->prepare("SELECT AVG(rating) as average, COUNT(rating) as count FROM reviews WHERE id_recipe = ?");
         $stmt->execute([$recipeId]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
     
     public function getReviews($recipeId) {
-        $stmt = $this->pdo->prepare("SELECT r.text, u.name, r.date FROM reviews r JOIN users u ON r.id_user = u.id WHERE r.id_recipe = ? ORDER BY r.date DESC");
+        $stmt = $this->pdo->prepare("SELECT r.text, u.name, r.rating, r.date FROM reviews r JOIN users u ON r.id_user = u.id WHERE r.id_recipe = ? ORDER BY r.date DESC");
         $stmt->execute([$recipeId]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

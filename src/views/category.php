@@ -36,7 +36,7 @@
     <ul>
         <?php foreach ($recipes as $recipe): ?>
             <li>
-                <a href="/public/recipe.php?id=<?= $recipe['id']; ?>"><?= htmlspecialchars($recipe['name']); ?></a>
+                <a href="../public/recipe.php?id=<?= $recipe['id']; ?>"><?= htmlspecialchars($recipe['name']); ?></a>
             </li>
         <?php endforeach; ?>
     </ul>

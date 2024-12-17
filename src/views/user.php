@@ -378,7 +378,7 @@ html {
             <img src="\images\LOGO.png" alt="Кошик" width="115" height="60">
         </a>
         <nav class="main-nav">
-            <a href="/" class="main-nav-link">Рецепти</a>
+            <a href="../" class="main-nav-link">Рецепти</a>
             <a href="#" class="main-nav-link">Інгредієнти</a>
             <a href="#" class="main-nav-link">Страви</a>
         </nav>
