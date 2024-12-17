@@ -27,7 +27,6 @@ class User {
     }
     
     public function register($name, $email, $password) {
-
         $stmt = $this->pdo->prepare("SELECT * FROM users WHERE email = ?");
         $stmt->execute([$email]);
         if ($stmt->fetch()) {
@@ -64,7 +63,6 @@ class User {
 
     public function changePassword($userId, $currentPassword, $newPassword) {
         try {
-
             $stmt = $this->pdo->prepare("SELECT password FROM users WHERE id = ?");
             $stmt->execute([$userId]);
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -104,4 +102,48 @@ class User {
         header('Location: index.php');
         exit;
     }
-}
+    
+        public function addRecipeToFavorites($userId, $recipeId) {
+            $stmt = $this->pdo->prepare("INSERT IGNORE INTO favorites (id_user, id_recipe) VALUES (?, ?)");
+            try {
+                $stmt->execute([$userId, $recipeId]);
+                return true;
+            } catch (PDOException $e) {
+                error_log('Помилка додавання рецепту в обране: ' . $e->getMessage());
+                return false;
+            }
+        }
+
+        public function removeRecipeFromFavorites($userId, $recipeId) {
+            $query = "DELETE FROM favorites WHERE id_user = :user_id AND id_recipe = :recipe_id";
+            $stmt = $this->pdo->prepare($query);
+            $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
+            $stmt->bindParam(':recipe_id', $recipeId, PDO::PARAM_INT);
+            
+            try {
+                $stmt->execute();
+                return true;
+            } catch (PDOException $e) {
+                error_log('Помилка видалення рецепту з обраного: ' . $e->getMessage());
+                return false;
+            }
+        }
+    
+        public function isRecipeInFavorites($userId, $recipeId) {
+            $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM favorites WHERE id_user = ? AND id_recipe = ?");
+            $stmt->execute([$userId, $recipeId]);
+            return $stmt->fetchColumn() > 0;
+        }
+
+        public function getFavoriteRecipes($userId) {
+            $stmt = $this->pdo->prepare("
+                SELECT r.* 
+                FROM favorites f
+                JOIN recipes r ON f.id_recipe = r.id
+                WHERE f.id_user = ?
+            ");
+            $stmt->execute([$userId]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+    }
+        

@@ -11,11 +11,10 @@ if (!isset($_SESSION['user_name'])) {
 }
 
 $userId = $_SESSION['user_id'];
-$message = '';
+$message = ''; 
 
-if (isset($_POST['update_profile'])) {
-    $newUsername = $_POST['new_username'];
-
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
+    $newUsername = trim($_POST['new_username']);
     $currentProfilePhoto = $userController->getUserProfile($userId);
     $profilePhotoPath = $currentProfilePhoto;
 
@@ -32,45 +31,71 @@ if (isset($_POST['update_profile'])) {
             if (move_uploaded_file($_FILES['profile_photo']['tmp_name'], $uploadFile)) {
                 $profilePhotoPath = '/images/profile_photos/' . $newFileName;
 
-                if (file_exists(__DIR__ . '/../' . $currentProfilePhoto)) {
+                if ($currentProfilePhoto && file_exists(__DIR__ . '/../' . $currentProfilePhoto)) {
                     unlink(__DIR__ . '/../' . $currentProfilePhoto);
                 }
+            } else {
+                $message = "Помилка завантаження фото профілю.";
             }
+        } else {
+            $message = "Непідтримуваний формат файлу. Доступні формати: JPG, JPEG, PNG, GIF.";
         }
     }
 
-    $message = $userController->updateUserProfile($userId, $newUsername, $profilePhotoPath);
+    if (empty($message)) {
+        $message = $userController->updateUserProfile($userId, $newUsername, $profilePhotoPath);
+        $_SESSION['user_name'] = $newUsername; 
 
-    $_SESSION['user_name'] = $newUsername;
-
-    header('Location: user.php');
-    exit;
+        header('Location: user.php');
+        exit;
+    }
 }
 
-if (isset($_POST['change_password'])) {
-    $userId = $_SESSION['user_id'];
-    $currentPassword = $_POST['current_password'];
-    $newPassword = $_POST['new_password'];
-    $confirmPassword = $_POST['confirm_password'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['change_password'])) {
+    $currentPassword = trim($_POST['current_password']);
+    $newPassword = trim($_POST['new_password']);
+    $confirmPassword = trim($_POST['confirm_password']);
 
-    if ($newPassword !== $confirmPassword) {
+    if (empty($currentPassword) || empty($newPassword) || empty($confirmPassword)) {
+        $message = "Усі поля обов'язкові для заповнення.";
+    } elseif ($newPassword !== $confirmPassword) {
         $message = "Паролі не співпадають!";
     } else {
         $message = $userController->changeUserPassword($userId, $currentPassword, $newPassword);
     }
-
-    echo $message;
 }
 
-if (isset($_POST['logout'])) {
-    $userController->logout();  
-}
-
-if (!isset($_SESSION['user_name'])) {
-    header('Location: index.php');
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
+    $userController->logout();
+    header('Location: login.php');
     exit;
 }
 
-$profilePhotoUrl = $userController->getUserProfile($_SESSION['user_id']);
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['toggle_favorite'])) {
+    $recipeId = $_POST['recipe_id'] ?? null;
+    $redirectPage = $_POST['redirect_page'] ?? 'recipe.php';
+
+    if ($recipeId && is_numeric($recipeId)) {
+
+        $isFavorite = $userController->isRecipeInFavorites($userId, $recipeId);
+
+        if ($isFavorite) {
+ 
+            $message = $userController->removeRecipeFromFavorites($userId, $recipeId);
+        } else {
+
+            $message = $userController->addRecipeToFavorites($userId, $recipeId);
+        }
+
+        header("Location: $redirectPage?id=$recipeId");
+        exit;
+    } else {
+        $message = "Немає даних про рецепт або некоректний ідентифікатор.";
+    }
+}
+
+$profilePhotoUrl = $userController->getUserProfile($userId);
+
 include '../src/views/user.php';
+include '../src/views/recipe.php';
 ?>

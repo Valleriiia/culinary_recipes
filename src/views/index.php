@@ -123,6 +123,7 @@
 .dropdown:hover .dropdown-menu {
     display: block;
 }
+
         footer {
             background: #2F5333;
             color: white;
@@ -222,6 +223,7 @@
     scrollbar-width: thin;
     scrollbar-color: #999 #f7fafc;
 }
+
     </style>
 </head>
 <body>
@@ -237,53 +239,61 @@
             </nav>
             <div class="right-nav">
                 <div class="nav-icons">
-                    <div class="dropdown">
-                        <?php if (isset($isLoggedIn) && $isLoggedIn): ?>
-                            <a href="#" class="dropdown-toggle" title="Меню профілю">
-                                <img src="\svg\2.svg" width="40" height="30">
-                                <img src="\svg\1.svg" width="40" height="30">
-                            </a>
-                            <div class="dropdown-menu">
-                                <a href="#" class="dropdown-item">Мій профіль</a>
-                                <form action="" method="post" class="logout-form">
-                                    <button type="submit" name="logout" class="dropdown-item" style="background:none; border:none; width:100%; text-align:left; cursor:pointer;">Вийти</button>
+                     <div class="dropdown">
+                            <?php if (isset($isLoggedIn) && $isLoggedIn): ?>
+                                <a href="#" class="dropdown-toggle" title="Перехід до збережених рецептів" id="openFavoritesPage">
+                                    <img src="/svg/2.svg" width="40" height="30">
+                                </a>
+                                <a href="#" class="dropdown-toggle" title="Перехід до профілю користувача" id="openUserPage">
+                                    <img src="/svg/1.svg" width="40" height="30">
+                                </a>
+                                <div class="dropdown-menu">
+                                    <a href="/public/user.php" class="dropdown-item">Мій профіль</a> 
+                                    <a href="#" class="dropdown-item" id="logout-link">Вийти</a>
+                                </div>
+                                <form id="logout-form" action="/logout.php" method="POST" style="display: none;">
+                                    <input type="hidden" name="logout" value="true">
                                 </form>
-                            </div>
-                        <?php else: ?>
-                            <form action="/public/login.php" method="get">
-                                <button type="submit" class="login-btn">Вхід/Реєстрація</button>
-                            </form>
-                        <?php endif; ?>
-                    </div>
+                            <?php else: ?>
+                                <form action="/public/login.php" method="get">
+                                    <button type="submit" class="login-btn">Вхід/Реєстрація</button>
+                                </form>
+                            <?php endif; ?>
+                        </div>
                 </div>
             </div>
         </div>
     </header>
 
     <div class="hero-section">
-    <h1>Заряджайте своє тіло та душу – знаходьте рецепти, що неймовірно смакують!</h1>
-    <div class="search-bar">
-        <input type="text" placeholder="Пошук за стравою, інгредієнтами...">
+        <h1>Заряджайте своє тіло та душу – знаходьте рецепти, що неймовірно смакують!</h1>
+        <div class="search-bar">
+            <input type="text" placeholder="Пошук за стравою, інгредієнтами...">
+        </div>
+        <div class="darkener-overlay"></div>
     </div>
-    <div class="darkener-overlay"></div>
-</div>
-
-    
 
     <main>
         <p>Ласкаво просимо на сайт!</p>
         <ul>
-    <?php if (!empty($categories)): ?>
-        <?php foreach ($categories as $category): ?>
-            <li>
-                <a href="/public/category.php?id=<?= $category['id']; ?>"><?= htmlspecialchars($category['name']); ?></a>
-            </li>
-        <?php endforeach; ?>
-    <?php else: ?>
-        <p>Категорій не знайдено.</p>
-    <?php endif; ?>
-</ul>
+            <?php if (!empty($categories)): ?>
+                <?php foreach ($categories as $category): ?>
+                    <li>
+                        <a href="/public/category.php?id=<?= $category['id']; ?>"><?= htmlspecialchars($category['name']); ?></a>
+                    </li>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p>Категорій не знайдено.</p>
+            <?php endif; ?>
+        </ul>
     </main>
+
+    <script>
+    document.querySelector('#logout-link').addEventListener('click', function(e) {
+        e.preventDefault();  
+        document.querySelector('#logout-form').submit();  
+    });
+    </script>
 
     <footer>
         <p>&copy; 2024 Kitchen Tales. Всі права захищені.</p>

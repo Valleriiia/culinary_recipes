@@ -372,159 +372,155 @@ html {
     </style>
 </head>
 <body>
-<header>
+  <header>
     <div class="navbar">
-        <a href="/" class="logo">
-            <img src="\images\LOGO.png" alt="Кошик" width="115" height="60">
-        </a>
-        <nav class="main-nav">
-            <a href="/" class="main-nav-link">Рецепти</a>
-            <a href="#" class="main-nav-link">Інгредієнти</a>
-            <a href="#" class="main-nav-link">Страви</a>
-        </nav>
-        <div class="right-nav">
-            <div class="nav-icons">
-    <div class="dropdown">
-        <a href="#" class="dropdown-toggle" title="Перехід до збережених рецептів" id="openUserPage">
-            <img src="\svg\2.svg" width="40" height="30">
-            <img src="\svg\1.svg" width="40" height="30">
-        </a>
-        <div class="dropdown-menu">
-            <a href="#" class="dropdown-item">Мій профіль</a>
-            <a href="#" class="dropdown-item" id="logout-link">Вийти</a>
-        </div>
-    </div>
-</div>
-
-
-                    <form id="logout-form" action="/public/user.php" method="POST" style="display: none;">
-                        <input type="hidden" name="logout" value="true">
-                    </form>
-                </div>
+      <a href="/" class="logo">
+        <img src="/images/LOGO.png" alt="Кошик" width="115" height="60">
+      </a>
+      <nav class="main-nav">
+        <a href="/" class="main-nav-link">Рецепти</a>
+        <a href="#" class="main-nav-link">Інгредієнти</a>
+        <a href="#" class="main-nav-link">Страви</a>
+      </nav>
+      <div class="right-nav">
+        <div class="nav-icons">
+          <div class="dropdown">
+            <a href="#" class="dropdown-toggle" title="Перехід до збережених рецептів" id="openFavoritesPage">
+              <img src="/svg/2.svg" width="40" height="30">
+            </a>
+            <a href="#" class="dropdown-toggle" title="Перехід до профілю користувача" id="openUserPage">
+              <img src="/svg/1.svg" width="40" height="30">
+            </a>
+            <div class="dropdown-menu">
+              <a href="#" class="dropdown-item">Мій профіль</a>
+              <a href="#" class="dropdown-item" id="logout-link">Вийти</a>
             </div>
+          </div>
         </div>
+        <form id="logout-form" action="/public/user.php" method="POST" style="display: none;">
+          <input type="hidden" name="logout" value="true">
+        </form>
+      </div>
     </div>
-</header>
+  </header>
 
-
-<div class="content-wrapper">
+  <div class="content-wrapper">
     <aside class="sidebar">
-        <h2 class="menu-title">Мій профіль</h2>
-        <ul class="profile-menu">
-            <li class="active" data-tab="edit-profile">Редагувати профіль</li>
-            <li data-tab="account-settings">Налаштування акаунту</li>
-        </ul>
+      <h2 class="menu-title">Мій профіль</h2>
+      <ul class="profile-menu">
+        <li class="active" data-tab="edit-profile">Редагувати профіль</li>
+        <li data-tab="account-settings">Налаштування акаунту</li>
+      </ul>
     </aside>
     <div class="main-content">
-        <div id="edit-profile" class="tab-content active">
-            <h1 class="page-title">Редагувати профіль</h1>
-            <div class="profile-form">
-                <form action="/public/user.php" method="POST" enctype="multipart/form-data">
-                    <div class="form-section">
-                        <h2>Фото профілю</h2>
-                        <div class="photo-container">
-                            <img id="profile-photo" src="<?php echo $profilePhotoUrl; ?>" alt="Фото профілю" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover;">
-                            <div class="camera-icon">
-                                <i class="fas fa-camera"></i>
-                            </div>
-                        </div>
-                        <input type="file" id="profile-photo-upload" name="profile_photo" accept="image/*" style="display: none;">
-                    </div>
-
-                    <div class="form-section">
-                        <h2>Основні дані</h2>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="new_username">Нікнейм</label>
-                                <input type="text" id="new_username" name="new_username" value="<?php echo htmlspecialchars($_SESSION['user_name']); ?>" placeholder="Введіть новий нікнейм">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-section">
-                        <button type="submit" name="update_profile" class="update-btn">Оновити</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <div id="account-settings" class="tab-content">
-    <h1 class="page-title">Налаштування акаунту</h1>
-    <div class="profile-form">
-        <form action="/public/user.php" method="POST">
+      <div id="edit-profile" class="tab-content active">
+        <h1 class="page-title">Редагувати профіль</h1>
+        <div class="profile-form">
+          <form action="/public/user.php" method="POST" enctype="multipart/form-data">
             <div class="form-section">
-                <h2>Зміна паролю</h2>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="current_password">Поточний пароль</label>
-                        <input type="password" id="current_password" name="current_password" placeholder="Введіть поточний пароль" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="new_password">Новий пароль</label>
-                        <input type="password" id="new_password" name="new_password" placeholder="Введіть новий пароль" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="confirm_password">Підтвердження паролю.</label>
-                        <input type="password" id="confirm_password" name="confirm_password" placeholder="Підтвердіть новий пароль" required>
-                    </div>
+              <h2>Фото профілю</h2>
+              <div class="photo-container">
+                <img id="profile-photo" src="<?php echo $profilePhotoUrl; ?>" alt="Фото профілю"
+                  style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover;">
+                <div class="camera-icon">
+                  <i class="fas fa-camera"></i>
                 </div>
+              </div>
+              <input type="file" id="profile-photo-upload" name="profile_photo" accept="image/*" style="display: none;">
             </div>
-
             <div class="form-section">
-                <button type="submit" name="change_password" class="update-btn">Змінити пароль</button>
+              <h2>Основні дані</h2>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="new_username">Нікнейм</label>
+                  <input type="text" id="new_username" name="new_username" value="<?php echo htmlspecialchars($_SESSION['user_name']); ?>"
+                    placeholder="Введіть новий нікнейм">
+                </div>
+              </div>
             </div>
-        </form>
+            <div class="form-section">
+              <button type="submit" name="update_profile" class="update-btn">Оновити</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div id="account-settings" class="tab-content">
+        <h1 class="page-title">Налаштування акаунту</h1>
+        <div class="profile-form">
+          <form action="/public/user.php" method="POST">
+            <div class="form-section">
+              <h2>Зміна паролю</h2>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="current_password">Поточний пароль</label>
+                  <input type="password" id="current_password" name="current_password" placeholder="Введіть поточний пароль" required>
+                </div>
+                <div class="form-group">
+                  <label for="new_password">Новий пароль</label>
+                  <input type="password" id="new_password" name="new_password" placeholder="Введіть новий пароль" required>
+                </div>
+                <div class="form-group">
+                  <label for="confirm_password">Підтвердження паролю</label>
+                  <input type="password" id="confirm_password" name="confirm_password" placeholder="Підтвердіть новий пароль" required>
+                </div>
+              </div>
+            </div>
+            <div class="form-section">
+              <button type="submit" name="change_password" class="update-btn">Змінити пароль</button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-</div>
+  </div>
 
-    </div>
-</div>
-
-<script>
+  <script>
     document.querySelector('.camera-icon').addEventListener('click', function() {
-        document.querySelector('#profile-photo-upload').click();
+      document.querySelector('#profile-photo-upload').click();
     });
 
     document.querySelector('#profile-photo-upload').addEventListener('change', function(event) {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                document.querySelector('#profile-photo').src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-        }
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.querySelector('#profile-photo').src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
     });
 
     document.querySelectorAll('.profile-menu li').forEach(item => {
-        item.addEventListener('click', function() {
-            const tabId = this.getAttribute('data-tab');
-            
-            document.querySelectorAll('.profile-menu li').forEach(li => {
-                li.classList.remove('active');
-            });
-            
-            this.classList.add('active');
-            
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            
-            document.getElementById(tabId).classList.add('active');
+      item.addEventListener('click', function() {
+        const tabId = this.getAttribute('data-tab');
+        document.querySelectorAll('.profile-menu li').forEach(li => {
+          li.classList.remove('active');
         });
+        this.classList.add('active');
+        document.querySelectorAll('.tab-content').forEach(tab => {
+          tab.classList.remove('active');
+        });
+        document.getElementById(tabId).classList.add('active');
+      });
     });
+
     document.querySelector('#logout-link').addEventListener('click', function(event) {
-    event.preventDefault(); 
-    document.querySelector('#logout-form').submit(); 
-});
+      event.preventDefault();
+      document.querySelector('#logout-form').submit();
+    });
 
-document.getElementById('openUserPage').addEventListener('click', function(event) {
-    event.preventDefault(); // Запобігає стандартному переходу за посиланням
-    window.open('user.php', '_blank'); // Відкриває нову вкладку на сторінку user.php
-});
+    document.getElementById('openUserPage').addEventListener('click', function(event) {
+      event.preventDefault();
+      window.location.href = 'user.php';
+    });
 
-</script>
+    document.getElementById('openFavoritesPage').addEventListener('click', function(event) {
+      event.preventDefault();
+      window.location.href = 'favorites.php';
+    });
+  </script>
 
-<footer>
+  <footer>
     <p>&copy; 2024 Kitchen Tales. Всі права захищені.</p>
-</footer>
+  </footer>
 </body>
-</html>

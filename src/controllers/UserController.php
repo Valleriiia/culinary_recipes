@@ -4,11 +4,9 @@ require_once __DIR__ . '/../models/User.php';
 
 class UserController {
     private $userModel;
-    private $pdo;
 
     public function __construct($pdo) {
         $this->userModel = new User($pdo);
-        $this->pdo = $pdo; 
     }
 
     public function login($email, $password) {
@@ -24,7 +22,6 @@ class UserController {
     }
 
     public function register($name, $email, $password) {
-
         if (empty($name) || empty($email) || empty($password)) {
             return 'Всі поля є обов\'язковими.';
         }
@@ -37,9 +34,7 @@ class UserController {
             return 'Пароль повинен бути не менше 6 символів.';
         }
 
-        $message = $this->userModel->register($name, $email, $password);
-        
-        return $message;
+        return $this->userModel->register($name, $email, $password);
     }
 
     public function updateUserProfile($userId, $newUsername, $profilePhotoPath = null) {
@@ -65,6 +60,35 @@ class UserController {
     }
 
     public function logout() {
-        $this->userModel->logout();
+        session_unset();
+        session_destroy();
+        header("Location: login.php");
+        exit;
+    }
+
+    public function addRecipeToFavorites($userId, $recipeId) {
+        if (empty($userId) || empty($recipeId)) {
+            return "Недостатньо даних для додавання рецепта.";
+        }
+        return $this->userModel->addRecipeToFavorites($userId, $recipeId) ? 
+            "Рецепт додано до вибраного." : "Не вдалося додати рецепт.";
+    }
+
+
+    public function removeRecipeFromFavorites($userId, $recipeId) {
+        if (empty($userId) || empty($recipeId)) {
+            return "Недостатньо даних для видалення рецепта.";
+        }
+        return $this->userModel->removeRecipeFromFavorites($userId, $recipeId) ? 
+            "Рецепт видалено з вибраного." : "Не вдалося видалити рецепт.";
+    }
+
+    public function isRecipeInFavorites($userId, $recipeId) {
+        return $this->userModel->isRecipeInFavorites($userId, $recipeId);
+    }
+
+    public function getFavoriteRecipes($userId) {
+        return $this->userModel->getFavoriteRecipes($userId);
     }
 }
+?>
