@@ -254,12 +254,22 @@
                                 <form id="logout-form" action="/logout.php" method="POST" style="display: none;">
                                     <input type="hidden" name="logout" value="true">
                                 </form>
+<<<<<<< HEAD
                             <?php else: ?>
                                 <form action="/public/login.php" method="get">
                                     <button type="submit" class="login-btn">Вхід/Реєстрація</button>
                                 </form>
                             <?php endif; ?>
                         </div>
+=======
+                            </div>
+                        <?php else: ?>
+                            <form action="public/login.php" method="get">
+                                <button type="submit" class="login-btn">Вхід/Реєстрація</button>
+                            </form>
+                        <?php endif; ?>
+                    </div>
+>>>>>>> 2a144ece197c67cfb4f60772e5c86ac12500c8ff
                 </div>
             </div>
         </div>
@@ -276,6 +286,7 @@
     <main>
         <p>Ласкаво просимо на сайт!</p>
         <ul>
+<<<<<<< HEAD
             <?php if (!empty($categories)): ?>
                 <?php foreach ($categories as $category): ?>
                     <li>
@@ -286,6 +297,18 @@
                 <p>Категорій не знайдено.</p>
             <?php endif; ?>
         </ul>
+=======
+    <?php if (!empty($categories)): ?>
+        <?php foreach ($categories as $category): ?>
+            <li>
+                <a href="public/category.php?id=<?= $category['id']; ?>"><?= htmlspecialchars($category['name']); ?></a>
+            </li>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <p>Категорій не знайдено.</p>
+    <?php endif; ?>
+</ul>
+>>>>>>> 2a144ece197c67cfb4f60772e5c86ac12500c8ff
     </main>
 
     <script>

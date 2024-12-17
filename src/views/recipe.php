@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($recipe['name']); ?></title>
-    <link rel="stylesheet" href="/public/css/styles.css">
+    <link rel="stylesheet" href="../public/css/recipes.css">
 </head>
 <body>
     <header>
         <a href="/"><img src="/public/images/logo.png" alt="Логотип"></a>
-        <form action="/public/search.php" method="GET">
+        <form action="../public/search.php" method="GET">
             <input type="text" name="q" placeholder="Пошук рецептів">
             <button type="submit">Знайти</button>
         </form>
@@ -45,8 +45,9 @@
                 <ul>
                     <?php foreach ($reviews as $review): ?>
                         <li>
-                            <strong><?= htmlspecialchars($review['name']); ?></strong> (<?= htmlspecialchars($review['date']); ?>):
-                            <p><?= nl2br(htmlspecialchars($review['text'])); ?></p>
+                            <p>Оцінка: <?= str_repeat('★', $review['rating']) . str_repeat('☆', 5 - $review['rating']); ?></p>
+                            <p><?= htmlspecialchars($review['text'] ?? 'Без коментаря'); ?></p>
+                            <p><small><?= $review['date']; ?></small></p>
                         </li>
                     <?php endforeach; ?>
                 </ul>
@@ -57,10 +58,21 @@
 
         <section>
             <h2>Додати відгук</h2>
-            <form action="/add_review.php" method="POST">
+            <form action="/dashboard/recipes/public/add_review.php" method="POST">
                 <input type="hidden" name="recipe_id" value="<?= $recipe['id']; ?>">
-                <textarea name="comment" placeholder="Напишіть свій відгук" required></textarea>
-                <button type="submit">Додати</button>
+
+                <div class="rating">
+                    <span class="star" data-value="1">&#9733;</span>
+                    <span class="star" data-value="2">&#9733;</span>
+                    <span class="star" data-value="3">&#9733;</span>
+                    <span class="star" data-value="4">&#9733;</span>
+                    <span class="star" data-value="5">&#9733;</span>
+                </div>
+                <input type="hidden" name="rating" id="rating" value="0" required>
+
+                <textarea name="comment" placeholder="Напишіть свій відгук (необов'язково)"></textarea>
+
+                <button type="submit">Додати оцінку</button>
             </form>
         </section>
     </main>
@@ -68,5 +80,32 @@
     <footer>
         <p>&copy; <?= date('Y'); ?> Ваш кулінарний сайт</p>
     </footer>
+    <script>
+    const stars = document.querySelectorAll('.rating .star');
+    const ratingInput = document.getElementById('rating');
+
+    stars.forEach((star) => {
+        star.addEventListener('click', () => {
+            const value = star.dataset.value;
+            ratingInput.value = value;
+
+            stars.forEach(s => s.classList.remove('selected'));
+            for (let i = 0; i < value; i++) {
+                stars[i].classList.add('selected');
+            }
+        });
+
+        star.addEventListener('mouseover', () => {
+            stars.forEach(s => s.classList.remove('hover'));
+            for (let i = 0; i < star.dataset.value; i++) {
+                stars[i].classList.add('hover');
+            }
+        });
+
+        star.addEventListener('mouseout', () => {
+            stars.forEach(s => s.classList.remove('hover'));
+        });
+    });
+</script>
 </body>
 </html>

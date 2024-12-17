@@ -374,6 +374,7 @@ html {
 <body>
   <header>
     <div class="navbar">
+<<<<<<< HEAD
       <a href="/" class="logo">
         <img src="/images/LOGO.png" alt="Кошик" width="115" height="60">
       </a>
@@ -394,6 +395,35 @@ html {
             <div class="dropdown-menu">
               <a href="#" class="dropdown-item">Мій профіль</a>
               <a href="#" class="dropdown-item" id="logout-link">Вийти</a>
+=======
+        <a href="/" class="logo">
+            <img src="\images\LOGO.png" alt="Кошик" width="115" height="60">
+        </a>
+        <nav class="main-nav">
+            <a href="../" class="main-nav-link">Рецепти</a>
+            <a href="#" class="main-nav-link">Інгредієнти</a>
+            <a href="#" class="main-nav-link">Страви</a>
+        </nav>
+        <div class="right-nav">
+            <div class="nav-icons">
+    <div class="dropdown">
+        <a href="#" class="dropdown-toggle" title="Перехід до збережених рецептів" id="openUserPage">
+            <img src="\svg\2.svg" width="40" height="30">
+            <img src="\svg\1.svg" width="40" height="30">
+        </a>
+        <div class="dropdown-menu">
+            <a href="#" class="dropdown-item">Мій профіль</a>
+            <a href="#" class="dropdown-item" id="logout-link">Вийти</a>
+        </div>
+    </div>
+</div>
+
+
+                    <form id="logout-form" action="/public/user.php" method="POST" style="display: none;">
+                        <input type="hidden" name="logout" value="true">
+                    </form>
+                </div>
+>>>>>>> 2a144ece197c67cfb4f60772e5c86ac12500c8ff
             </div>
           </div>
         </div>
