@@ -374,28 +374,6 @@ html {
 <body>
   <header>
     <div class="navbar">
-<<<<<<< HEAD
-      <a href="/" class="logo">
-        <img src="/images/LOGO.png" alt="Кошик" width="115" height="60">
-      </a>
-      <nav class="main-nav">
-        <a href="/" class="main-nav-link">Рецепти</a>
-        <a href="#" class="main-nav-link">Інгредієнти</a>
-        <a href="#" class="main-nav-link">Страви</a>
-      </nav>
-      <div class="right-nav">
-        <div class="nav-icons">
-          <div class="dropdown">
-            <a href="#" class="dropdown-toggle" title="Перехід до збережених рецептів" id="openFavoritesPage">
-              <img src="/svg/2.svg" width="40" height="30">
-            </a>
-            <a href="#" class="dropdown-toggle" title="Перехід до профілю користувача" id="openUserPage">
-              <img src="/svg/1.svg" width="40" height="30">
-            </a>
-            <div class="dropdown-menu">
-              <a href="#" class="dropdown-item">Мій профіль</a>
-              <a href="#" class="dropdown-item" id="logout-link">Вийти</a>
-=======
         <a href="/" class="logo">
             <img src="\images\LOGO.png" alt="Кошик" width="115" height="60">
         </a>
@@ -423,7 +401,6 @@ html {
                         <input type="hidden" name="logout" value="true">
                     </form>
                 </div>
->>>>>>> 2a144ece197c67cfb4f60772e5c86ac12500c8ff
             </div>
           </div>
         </div>
