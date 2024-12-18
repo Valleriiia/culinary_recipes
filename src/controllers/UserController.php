@@ -59,36 +59,27 @@ class UserController {
         return $this->userModel->changePassword($userId, $currentPassword, $newPassword);
     }
 
-    public function logout() {
-        session_unset();
-        session_destroy();
-        header("Location: login.php");
-        exit;
+    public function addToFavorites($userId, $recipeId) {
+        return $this->userModel->addToFavorites($userId, $recipeId);
     }
 
-    public function addRecipeToFavorites($userId, $recipeId) {
-        if (empty($userId) || empty($recipeId)) {
-            return "Недостатньо даних для додавання рецепта.";
-        }
-        return $this->userModel->addRecipeToFavorites($userId, $recipeId) ? 
-            "Рецепт додано до вибраного." : "Не вдалося додати рецепт.";
+    public function removeFromFavorites($userId, $recipeId) {
+        return $this->userModel->removeFromFavorites($userId, $recipeId);
     }
 
-
-    public function removeRecipeFromFavorites($userId, $recipeId) {
-        if (empty($userId) || empty($recipeId)) {
-            return "Недостатньо даних для видалення рецепта.";
-        }
-        return $this->userModel->removeRecipeFromFavorites($userId, $recipeId) ? 
-            "Рецепт видалено з вибраного." : "Не вдалося видалити рецепт.";
+    public function getFavoriteRecipes($userId) {
+        return $this->userModel->getFavoriteRecipes($userId);
     }
 
     public function isRecipeInFavorites($userId, $recipeId) {
         return $this->userModel->isRecipeInFavorites($userId, $recipeId);
     }
 
-    public function getFavoriteRecipes($userId) {
-        return $this->userModel->getFavoriteRecipes($userId);
+    public function logout() {
+        session_unset();
+        session_destroy();
+        header("Location: login.php");
+        exit;
     }
 }
 ?>

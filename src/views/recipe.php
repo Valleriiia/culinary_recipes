@@ -58,7 +58,7 @@
 
         <section>
             <h2>Додати відгук</h2>
-            <form action="/dashboard/recipes/public/add_review.php" method="POST">
+            <form action="/public/add_review.php" method="POST">
                 <input type="hidden" name="recipe_id" value="<?= $recipe['id']; ?>">
 
                 <div class="rating">
@@ -73,6 +73,13 @@
                 <textarea name="comment" placeholder="Напишіть свій відгук (необов'язково)"></textarea>
 
                 <button type="submit">Додати оцінку</button>
+            </form>
+        </section>
+
+        <section>
+            <form action="/public/favorites.php" method="POST">
+                <input type="hidden" name="recipe_id" value="<?= $recipe['id']; ?>">
+                <button type="submit" name="add_favorite">Додати до улюбленого</button>
             </form>
         </section>
     </main>
