@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($recipe['name']); ?></title>
     <link rel="stylesheet" href="../public/css/recipes.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <header>
@@ -44,14 +45,16 @@
                 </div>
             </div>
         </div>
-        <a href="/"><img src="/public/images/logo.png" alt="Логотип"></a>
-        <form action="../public/search.php" method="GET">
-            <input type="text" name="q" placeholder="Пошук рецептів">
-            <button type="submit">Знайти</button>
-        </form>
     </header>
 
     <main>
+        <div class="search">
+            <form action="../public/search.php" method="GET">
+                <img class="search-icon" src="../svg/3.svg" alt="search icon">
+                <input class="search-input" type="search" name="q" placeholder="Пошук рецептів">
+                <button type="submit" hidden>Знайти</button>
+            </form>
+        </div>
         <h1><?= htmlspecialchars($recipe['name']); ?></h1>
         <img src=<?= htmlspecialchars($recipe['photo']); ?> alt=<?= htmlspecialchars($recipe['name']); ?>>
         <p><?= htmlspecialchars($recipe['description']); ?></p>

@@ -44,15 +44,14 @@
                 </div>
             </div>
         </div>
-        <div class="search">
-            <form action="../public/search.php" method="GET">
-                <input class="search-input" type="search" name="q" placeholder="Пошук рецептів">
-                <svg aria-hidden="true" class="s-input-icon s-input-icon__search svg-icon iconSearch" width="28" height="28" viewBox="0 0 18 18"><path d="m18 16.5-5.14-5.18h-.35a7 7 0 1 0-1.19 1.19v.35L16.5 18zM12 7A5 5 0 1 1 2 7a5 5 0 0 1 10 0"></path></svg>
-                <button type="submit" hidden>Знайти</button>
-            </form>
-        </div>
     </header>
-    
+    <div class="search">
+        <form action="../public/search.php" method="GET">
+            <img class="search-icon" src="../svg/3.svg" alt="search icon">
+            <input class="search-input" type="search" name="q" placeholder="Пошук рецептів">
+            <button type="submit" hidden>Знайти</button>
+        </form>
+    </div>
     <h1>Страви в категорії: <?= htmlspecialchars($category['name']); ?></h1>
 
     <!-- Фільтр за інгредієнтами -->

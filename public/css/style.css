@@ -17,8 +17,6 @@ body {
     color: var(--text-color);
     overflow-y: auto; 
     height: 100vh;
-    margin: 0;
-    zoom: 1.1;
 }
 
 header {
@@ -133,117 +131,11 @@ display: block;
     color: #ACACAC;
 }
 
-.s-input-icon__search {
-    color: #6F6F6F;
+.search-icon {
     position: relative;
-    left: -875px;
+    left: 55px;
     top: 6px;
 
-}
-
-.svg-icon:not(.native) * {
-    fill: currentColor;
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-}
-
-header {
-    background: white;
-    border-bottom: 1px solid #e5e5e5;
-    padding: 5px 20px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
-
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none;
-    color: #000000;  
-    font-weight: bold;
-    font-size: 20px;
-    padding-left: 50px;
-}
-
-.main-nav {
-    display: flex;
-    gap: 30px;
-    align-items: center;
-}
-
-.main-nav a {
-    text-decoration: none;
-    color: #000000;  
-    font-weight: 500;
-}
-
-.right-nav {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.nav-icons {
-    display: flex;
-    gap: 25px;
-    padding-right: 50px;
-}
-
-.nav-icons a {
-    color: #000000;  
-    font-size: 20px;
-    margin-right: 5px;
-    text-decoration: none; 
-}
-
-.nav-icons {
-    position: relative;
-}
-
-.dropdown {
-    display: inline-block;
-    position: relative;
-}
-
-.dropdown-menu {
-    display: none;
-    position: absolute;
-    background-color: white;
-    min-width: 130px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 1;
-    right: 0;
-    border-radius: 4px;
-    padding: 8px 0;
-}
-
-.dropdown-menu a {
-    color: black;  
-    padding: 8px 16px;
-    text-decoration: none;
-    display: block;
-    font-size: 14px;
-}
-
-.dropdown-menu a:hover {
-    background-color: #f0f0f0;
-}
-
-.dropdown:hover .dropdown-menu {
-    display: block;
 }
 
 footer {
