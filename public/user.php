@@ -71,31 +71,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
     exit;
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['toggle_favorite'])) {
-    $recipeId = $_POST['recipe_id'] ?? null;
-    $redirectPage = $_POST['redirect_page'] ?? 'recipe.php';
+$isFavorite = false;
+$recipeId = $_POST['recipe_id'] ?? null;
 
-    if ($recipeId && is_numeric($recipeId)) {
+if ($recipeId && $userId) {
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM favorites WHERE id_user = ? AND id_recipe = ?");
+    $stmt->execute([$userId, $recipeId]);
+    $isFavorite = $stmt->fetchColumn() > 0;
+}
 
-        $isFavorite = $userController->isRecipeInFavorites($userId, $recipeId);
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['toggle_favorite'])) {
         if ($isFavorite) {
- 
-            $message = $userController->removeRecipeFromFavorites($userId, $recipeId);
+            $stmt = $pdo->prepare("DELETE FROM favorites WHERE id_user = ? AND id_recipe = ?");
+            $stmt->execute([$userId, $recipeId]);
         } else {
-
-            $message = $userController->addRecipeToFavorites($userId, $recipeId);
+            $stmt = $pdo->prepare("INSERT INTO favorites (id_user, id_recipe) VALUES (?, ?)");
+            $stmt->execute([$userId, $recipeId]);
         }
-
-        header("Location: $redirectPage?id=$recipeId");
-        exit;
-    } else {
-        $message = "Немає даних про рецепт або некоректний ідентифікатор.";
+        header("Location: " . $_SERVER['REQUEST_URI']);
+        exit();
     }
 }
 
 $profilePhotoUrl = $userController->getUserProfile($userId);
 
+
 include '../src/views/user.php';
-include '../src/views/recipe.php';
 ?>

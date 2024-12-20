@@ -10,7 +10,7 @@ class User {
         $stmt = $this->pdo->prepare("SELECT * FROM users WHERE email = ?");
         $stmt->execute([$email]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
-    
+
         if ($user) {
             if (password_get_info($user['password'])['algo']) {
                 if (password_verify($password, $user['password'])) {
@@ -22,10 +22,10 @@ class User {
                 }
             }
         }
-    
+
         return false;
     }
-    
+
     public function register($name, $email, $password) {
         $stmt = $this->pdo->prepare("SELECT * FROM users WHERE email = ?");
         $stmt->execute([$email]);
@@ -102,48 +102,57 @@ class User {
         header('Location: index.php');
         exit;
     }
-    
-        public function addRecipeToFavorites($userId, $recipeId) {
-            $stmt = $this->pdo->prepare("INSERT IGNORE INTO favorites (id_user, id_recipe) VALUES (?, ?)");
-            try {
-                $stmt->execute([$userId, $recipeId]);
-                return true;
-            } catch (PDOException $e) {
-                error_log('Помилка додавання рецепту в обране: ' . $e->getMessage());
-                return false;
-            }
-        }
-
-        public function removeRecipeFromFavorites($userId, $recipeId) {
-            $query = "DELETE FROM favorites WHERE id_user = :user_id AND id_recipe = :recipe_id";
-            $stmt = $this->pdo->prepare($query);
-            $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
-            $stmt->bindParam(':recipe_id', $recipeId, PDO::PARAM_INT);
-            
-            try {
-                $stmt->execute();
-                return true;
-            } catch (PDOException $e) {
-                error_log('Помилка видалення рецепту з обраного: ' . $e->getMessage());
-                return false;
-            }
-        }
-    
-        public function isRecipeInFavorites($userId, $recipeId) {
-            $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM favorites WHERE id_user = ? AND id_recipe = ?");
+    public function addToFavorites($userId, $recipeId) {
+        try {
+            $stmt = $this->pdo->prepare("INSERT INTO favorites (id_user, id_recipe) VALUES (?, ?)");
             $stmt->execute([$userId, $recipeId]);
-            return $stmt->fetchColumn() > 0;
+            return true;
+        } catch (PDOException $e) {
+            if ($e->getCode() == '23000') {
+                return false;
+            }
+            error_log('Помилка додавання в обрані: ' . $e->getMessage());
+            return false;
         }
-
-        public function getFavoriteRecipes($userId) {
+    }
+    
+    public function removeFromFavorites($userId, $recipeId) {
+        try {
+            $stmt = $this->pdo->prepare("DELETE FROM favorites WHERE id_user = ? AND id_recipe = ?");
+            $stmt->execute([$userId, $recipeId]);
+            return true;
+        } catch (PDOException $e) {
+            error_log('Помилка видалення з обраних: ' . $e->getMessage());
+            return false;
+        }
+    }
+    
+    public function getFavoriteRecipes($userId) {
+        try {
             $stmt = $this->pdo->prepare("
-                SELECT r.* 
-                FROM favorites f
-                JOIN recipes r ON f.id_recipe = r.id
+                SELECT r.* FROM recipes r
+                JOIN favorites f ON r.id = f.id_recipe
                 WHERE f.id_user = ?
             ");
             $stmt->execute([$userId]);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log('Помилка отримання обраних рецептів: ' . $e->getMessage());
+            return [];
         }
     }
-        
+    
+    public function isRecipeInFavorites($userId, $recipeId) {
+        try {
+            $stmt = $this->pdo->prepare("
+                SELECT COUNT(*) FROM favorites 
+                WHERE id_user = ? AND id_recipe = ?
+            ");
+            $stmt->execute([$userId, $recipeId]);
+            return $stmt->fetchColumn() > 0;
+        } catch (PDOException $e) {
+            error_log('Помилка перевірки обраних рецептів: ' . $e->getMessage());
+            return false;
+        }
+    }
+}
