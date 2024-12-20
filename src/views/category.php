@@ -47,7 +47,6 @@
     </header>
     <div class="search">
         <form action="../public/search.php" method="GET">
-            <img class="search-icon" src="../svg/3.svg" alt="search icon">
             <input class="search-input" type="search" name="q" placeholder="Пошук рецептів">
             <button type="submit" hidden>Знайти</button>
         </form>
