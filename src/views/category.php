@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Категорія страв</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/category.css">
 </head>
 <body>
     <header>
         <div class="navbar">
-            <a href="#" class="logo">
+            <a href="index.php" class="logo">
                 <img src="../images/LOGO.png" alt="Кошик" width="115" height="60">
             </a>
             <nav class="main-nav">
@@ -45,41 +46,46 @@
             </div>
         </div>
     </header>
-    <div class="search">
-        <form action="../public/search.php" method="GET">
-            <input class="search-input" type="search" name="q" placeholder="Пошук рецептів">
-            <button type="submit" hidden>Знайти</button>
+    <main>
+        <div class="search">
+            <form action="../public/search.php" method="GET">
+                <input class="search-input" type="search" name="q" autocomplete="off" placeholder="Пошук рецептів">
+                <button type="submit" hidden>Знайти</button>
+            </form>
+        </div>
+        <div class="category-heading">
+            <h2><?= htmlspecialchars($category['name']); ?></h2>
+            <p><?= htmlspecialchars($category['description']); ?></p>
+        </div>
+        <!-- Фільтр за інгредієнтами -->
+        <form method="GET" action="/public/category.php">
+            <input type="hidden" name="id" value="<?= htmlspecialchars($category['id']); ?>">
+            <h3>Фільтрувати за інгредієнтами:</h3>
+            <?php foreach ($ingredients as $ingredient): ?>
+                <label>
+                    <input 
+                        type="checkbox" 
+                        name="ingredients[]" 
+                        value="<?= $ingredient['id']; ?>"
+                        <?= in_array($ingredient['id'], $selectedIngredients) ? 'checked' : ''; ?>
+                    >
+                    <?= htmlspecialchars($ingredient['name']); ?>
+                </label><br>
+            <?php endforeach; ?>
+            <button type="submit">Застосувати фільтри</button>
+            <a href="/public/category.php?id=<?= htmlspecialchars($category['id']); ?>" style="margin-left: 10px;">Скинути фільтри</a>
         </form>
-    </div>
-    <h1>Страви в категорії: <?= htmlspecialchars($category['name']); ?></h1>
 
-    <!-- Фільтр за інгредієнтами -->
-    <form method="GET" action="/public/category.php">
-        <input type="hidden" name="id" value="<?= htmlspecialchars($category['id']); ?>">
-        <h3>Фільтрувати за інгредієнтами:</h3>
-        <?php foreach ($ingredients as $ingredient): ?>
-            <label>
-                <input 
-                    type="checkbox" 
-                    name="ingredients[]" 
-                    value="<?= $ingredient['id']; ?>"
-                    <?= in_array($ingredient['id'], $selectedIngredients) ? 'checked' : ''; ?>
-                >
-                <?= htmlspecialchars($ingredient['name']); ?>
-            </label><br>
-        <?php endforeach; ?>
-        <button type="submit">Застосувати фільтри</button>
-        <a href="/public/category.php?id=<?= htmlspecialchars($category['id']); ?>" style="margin-left: 10px;">Скинути фільтри</a>
-    </form>
+        <!-- Відображення страв -->
+        <ul>
+            <?php foreach ($recipes as $recipe): ?>
+                <li>
+                    <a href="../public/recipe.php?id=<?= $recipe['id']; ?>"><?= htmlspecialchars($recipe['name']); ?></a>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </main>
 
-    <!-- Відображення страв -->
-    <ul>
-        <?php foreach ($recipes as $recipe): ?>
-            <li>
-                <a href="../public/recipe.php?id=<?= $recipe['id']; ?>"><?= htmlspecialchars($recipe['name']); ?></a>
-            </li>
-        <?php endforeach; ?>
-    </ul>
 
     <script src="/js/scripts.js"></script>
 </body>
