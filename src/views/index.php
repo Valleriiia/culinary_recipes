@@ -242,10 +242,10 @@
                      <div class="dropdown">
                             <?php if (isset($isLoggedIn) && $isLoggedIn): ?>
                                 <a href="#" class="dropdown-toggle" title="Перехід до збережених рецептів" id="openFavoritesPage">
-                                    <img src="/svg/2.svg" width="40" height="30">
+                                    <img src="svg/2.svg" width="40" height="30">
                                 </a>
                                 <a href="#" class="dropdown-toggle" title="Перехід до профілю користувача" id="openUserPage">
-                                    <img src="/svg/1.svg" width="40" height="30">
+                                    <img src="svg/1.svg" width="40" height="30">
                                 </a>
                                 <div class="dropdown-menu">
                                     <a href="/public/user.php" class="dropdown-item">Мій профіль</a> 
