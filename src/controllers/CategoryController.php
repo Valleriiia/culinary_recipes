@@ -25,6 +25,10 @@ class CategoryController {
 
         $selectedIngredients = isset($_GET['ingredients']) ? $_GET['ingredients'] : [];
         $recipes = $this->recipeModel->getFilteredRecipesByCategory($categoryId, $selectedIngredients);
+        $ratings = [];
+        foreach ($recipes as $recipe) {
+            $ratings[$recipe['id']] = $this->recipeModel->getRatings($recipe['id']);
+            }
         $isLoggedIn = isset($_SESSION['user_name']); 
         include __DIR__ . '/../views/category.php';
     }

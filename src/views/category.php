@@ -11,7 +11,7 @@
     <header>
         <div class="navbar">
             <a href="index.php" class="logo">
-                <img src="../images/LOGO.png" alt="Кошик" width="115" height="60">
+                <img src="../images/LOGO.png" alt="Кошик" height="90">
             </a>
             <nav class="main-nav">
                 <a href="#">Рецепти</a>
@@ -23,10 +23,10 @@
                      <div class="dropdown">
                             <?php if (isset($isLoggedIn) && $isLoggedIn): ?>
                                 <a href="#" class="dropdown-toggle" title="Перехід до збережених рецептів" id="openFavoritesPage">
-                                    <img src="../svg/2.svg" width="40" height="30">
+                                    <img src="../svg/2.svg" height="42">
                                 </a>
                                 <a href="#" class="dropdown-toggle" title="Перехід до профілю користувача" id="openUserPage">
-                                    <img src="../svg/1.svg" width="40" height="30">
+                                    <img src="../svg/1.svg" height="42">
                                 </a>
                                 <div class="dropdown-menu">
                                     <a href="/public/user.php" class="dropdown-item">Мій профіль</a> 
@@ -58,29 +58,48 @@
             <p><?= htmlspecialchars($category['description']); ?></p>
         </div>
         <!-- Фільтр за інгредієнтами -->
-        <form method="GET" action="/public/category.php">
+        <aside>
+        <form method="GET" action="../public/category.php">
             <input type="hidden" name="id" value="<?= htmlspecialchars($category['id']); ?>">
-            <h3>Фільтрувати за інгредієнтами:</h3>
+            <h3 class="filter-heading">Фільтрувати:</h3>
+            <div class="filter-container">
             <?php foreach ($ingredients as $ingredient): ?>
                 <label>
+                    <?= htmlspecialchars($ingredient['name']); ?>
                     <input 
                         type="checkbox" 
                         name="ingredients[]" 
                         value="<?= $ingredient['id']; ?>"
                         <?= in_array($ingredient['id'], $selectedIngredients) ? 'checked' : ''; ?>
                     >
-                    <?= htmlspecialchars($ingredient['name']); ?>
-                </label><br>
+                </label>
             <?php endforeach; ?>
-            <button type="submit">Застосувати фільтри</button>
+            </div>
+            <button class="filter-button" type="submit">Застосувати фільтри</button>
             <a href="/public/category.php?id=<?= htmlspecialchars($category['id']); ?>" style="margin-left: 10px;">Скинути фільтри</a>
         </form>
-
+        </aside>
         <!-- Відображення страв -->
-        <ul>
+        <ul class="recipes-list">
             <?php foreach ($recipes as $recipe): ?>
                 <li>
-                    <a href="../public/recipe.php?id=<?= $recipe['id']; ?>"><?= htmlspecialchars($recipe['name']); ?></a>
+                    <a href="../public/recipe.php?id=<?= $recipe['id']; ?>">
+                        <div class="image-container" style="background: linear-gradient(179.91deg, #1D1D1D -43.99%, rgba(29, 29, 29, 0) 23.35%), url('../images/<?php echo htmlspecialchars($recipe['photo']) ?>');">
+                            <div class="save-button"><img src="../svg/5.svg" alt="save"></div>
+                        </div>
+                        <div class="recipe-details">
+                            <h4><?= htmlspecialchars($recipe['name']); ?></h4>
+                            <p class="cooking-time">Час приготування: <?= $recipe['cooking_time']; ?> хв</p>
+                            <div class="rating">
+                                <?php for ($i = 1; $i <= 5; $i++): ?>
+                                    <?php $fillPercentage = max(0, min(100, ($ratings[$recipe['id']]['average'] - $i + 1) * 100)); ?>
+                                    <div class="star" style="background: linear-gradient(90deg, #407948 <?php echo $fillPercentage; ?>%, lightgray <?php echo (100 - $fillPercentage); ?>%);"></div>
+                                <?php endfor; ?>
+                                <p>(<?= htmlspecialchars($ratings[$recipe['id']]['count']); ?>)</p>
+                            </div>
+
+                        </div>
+                    </a>
                 </li>
             <?php endforeach; ?>
         </ul>
