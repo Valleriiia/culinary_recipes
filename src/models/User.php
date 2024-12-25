@@ -10,7 +10,6 @@ class User {
         $stmt = $this->pdo->prepare("SELECT * FROM users WHERE email = ?");
         $stmt->execute([$email]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
         if ($user) {
             if (password_get_info($user['password'])['algo']) {
                 if (password_verify($password, $user['password'])) {
@@ -22,7 +21,6 @@ class User {
                 }
             }
         }
-
         return false;
     }
 
@@ -32,9 +30,7 @@ class User {
         if ($stmt->fetch()) {
             return 'Користувач з таким email вже існує.';
         }
-
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
         $stmt = $this->pdo->prepare("INSERT INTO users (name, email, password) VALUES (?, ?, ?)");
         try {
             $stmt->execute([$name, $email, $hashedPassword]);
@@ -62,27 +58,31 @@ class User {
     }
 
     public function changePassword($userId, $currentPassword, $newPassword) {
-        try {
-            $stmt = $this->pdo->prepare("SELECT password FROM users WHERE id = ?");
-            $stmt->execute([$userId]);
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            if (!$user || !password_verify($currentPassword, $user['password'])) {
-                return 'Поточний пароль невірний.';
+        $stmt = $this->pdo->prepare("SELECT password FROM users WHERE id = ?");
+        $stmt->execute([$userId]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if ($user) {
+            if (password_get_info($user['password'])['algo']) {
+                if (password_verify($currentPassword, $user['password'])) {
+                    $hashedNewPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+                    $updateStmt = $this->pdo->prepare("UPDATE users SET password = ? WHERE id = ?");
+                    $updateStmt->execute([$hashedNewPassword, $userId]);
+                    return "Пароль успішно змінено.";
+                }
+            } 
+            else {
+                if ($currentPassword === $user['password']) {
+                    $hashedNewPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+                    $updateStmt = $this->pdo->prepare("UPDATE users SET password = ? WHERE id = ?");
+                    $updateStmt->execute([$hashedNewPassword, $userId]);
+                    return "Пароль успішно змінено.";
+                }
             }
-
-            $newHashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
-
-            $updateStmt = $this->pdo->prepare("UPDATE users SET password = ? WHERE id = ?");
-            $updateStmt->execute([$newHashedPassword, $userId]);
-
-            return 'Пароль успішно змінено.';
-        } catch (PDOException $e) {
-            error_log('Помилка зміни паролю: ' . $e->getMessage());
-            return 'Технічна помилка. Спробуйте пізніше.';
         }
+        return "Неправильний поточний пароль.";
     }
-
+    
     public function getUserProfile($userId) {
         try {
             $stmt = $this->pdo->prepare("SELECT profile_photo FROM users WHERE id = ?");

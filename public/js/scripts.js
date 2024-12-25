@@ -100,3 +100,4 @@ lgForm.addEventListener('submit', function(e) {
         checkEmail(lgEmail.value); 
     }
 });
+
