@@ -28,6 +28,11 @@ class RecipeController {
 
     public function searchRecipes($keyword) {
         $results = $this->recipeModel->searchRecipes($keyword);
+        $ratings = [];
+        foreach ($results as $result) {
+            $ratings[$result['id']] = $this->recipeModel->getRatings($result['id']);
+        }
+        $isLoggedIn = isset($_SESSION['user_name']); 
         include __DIR__ . '/../views/search.php';
     }
 }

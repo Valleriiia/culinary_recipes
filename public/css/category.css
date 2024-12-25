@@ -1,11 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&display=swap');
 
-.category-heading {
+
+.category-heading, .search-heading {
     text-align: center;
     padding: 80px;
 }
 
-.category-heading h2 {
+.category-heading h2, .search-heading {
     font-family: "Cormorant Garamond", serif;
     font-weight: 600;
     font-size: 48px;
@@ -18,4 +19,122 @@
     font-size: 22px;
     font-weight: 400;
     line-height: 33px;
+}
+
+aside {
+    width: 250px;
+    float: left;
+    margin-left: 100px;
+    margin-right: 40px;
+}
+
+.filter-heading {
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 36px;
+    margin-bottom: 50px;
+}
+
+.filter-container {
+    width: 250px;
+}
+
+.filter-container label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 30px;
+    margin-bottom: 12px;
+}
+
+.filter-container input {
+    width: 22px;
+    height: 22px;
+    gap: 0px;
+    border-radius: 2px 0px 0px 0px;
+    border: 1.5px 0px 0px 0px;
+    opacity: 0px;
+}
+
+.filter-button {
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 25px;
+    width: 100%;
+    padding: 12px;
+    text-align: center;
+    font-size: 22px;
+    color: white;
+    margin: 10px 0;
+}
+
+.recipes-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+li {
+    margin-left: 40px;
+    list-style-type: none;
+    margin-bottom: 48px;
+}
+
+.recipes-list a {
+    text-decoration: none;
+}
+
+.recipes-list a:visited {
+    color: var(--text-color);
+}
+.recipes-list a:hover {
+    color: var(--primary-color);
+}
+
+.image-container {
+    width: 404px;
+    height: 290px;
+    background-size: cover !important;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 10px;
+    text-align: end;
+    padding: 14px;
+}
+
+h4 {
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 42px;
+    margin-bottom: 5px;
+}
+
+.recipes-list p {
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 27px;
+    margin-bottom: 6px;
+}
+
+.rating {
+    display: flex;
+    gap: 5px;
+}
+
+.star {
+    width: 24px;
+    height: 24px;
+    -webkit-mask: url('../../svg/Star.svg') no-repeat center;
+    mask: url('../../svg/Star.svg') no-repeat center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    background: lightgray;
+}
+
+.not-found {
+    font-size: 30px;
+    text-align: center;
 }
