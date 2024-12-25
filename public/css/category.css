@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&display=swap');
 
 
-.category-heading {
+.category-heading, .search-heading {
     text-align: center;
     padding: 80px;
 }
 
-.category-heading h2 {
+.category-heading h2, .search-heading {
     font-family: "Cormorant Garamond", serif;
     font-weight: 600;
     font-size: 48px;
@@ -132,4 +132,9 @@ h4 {
     -webkit-mask-size: contain;
     mask-size: contain;
     background: lightgray;
+}
+
+.not-found {
+    font-size: 30px;
+    text-align: center;
 }
