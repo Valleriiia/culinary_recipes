@@ -80,29 +80,35 @@
         </form>
         </aside>
         <!-- Відображення страв -->
-        <ul class="recipes-list">
-            <?php foreach ($recipes as $recipe): ?>
-                <li>
-                    <a href="../public/recipe.php?id=<?= $recipe['id']; ?>">
-                        <div class="image-container" style="background: linear-gradient(179.91deg, #1D1D1D -43.99%, rgba(29, 29, 29, 0) 23.35%), url('../images/<?php echo htmlspecialchars($recipe['photo']) ?>');">
-                            <div class="save-button"><img src="../svg/5.svg" alt="save"></div>
-                        </div>
-                        <div class="recipe-details">
-                            <h4><?= htmlspecialchars($recipe['name']); ?></h4>
-                            <p class="cooking-time">Час приготування: <?= $recipe['cooking_time']; ?> хв</p>
-                            <div class="rating">
-                                <?php for ($i = 1; $i <= 5; $i++): ?>
-                                    <?php $fillPercentage = max(0, min(100, ($ratings[$recipe['id']]['average'] - $i + 1) * 100)); ?>
-                                    <div class="star" style="background: linear-gradient(90deg, #407948 <?php echo $fillPercentage; ?>%, lightgray <?php echo (100 - $fillPercentage); ?>%);"></div>
-                                <?php endfor; ?>
-                                <p>(<?= htmlspecialchars($ratings[$recipe['id']]['count']); ?>)</p>
-                            </div>
-
-                        </div>
-                    </a>
-                </li>
-            <?php endforeach; ?>
-        </ul>
+         <section>
+            <?php if (!empty($recipes)): ?>
+                <ul class="recipes-list">
+                    <?php foreach ($recipes as $recipe): ?>
+                        <li>
+                            <a href="../public/recipe.php?id=<?= $recipe['id']; ?>">
+                                <div class="image-container" style="background: linear-gradient(179.91deg, #1D1D1D -43.99%, rgba(29, 29, 29, 0) 23.35%), url('../images/<?php echo htmlspecialchars($recipe['photo']) ?>');">
+                                    <div class="save-button"><img src="../svg/5.svg" alt="save"></div>
+                                </div>
+                                <div class="recipe-details">
+                                    <h4><?= htmlspecialchars($recipe['name']); ?></h4>
+                                    <p class="cooking-time">Час приготування: <?= $recipe['cooking_time']; ?> хв</p>
+                                    <div class="rating">
+                                        <?php for ($i = 1; $i <= 5; $i++): ?>
+                                            <?php $fillPercentage = max(0, min(100, ($ratings[$recipe['id']]['average'] - $i + 1) * 100)); ?>
+                                            <div class="star" style="background: linear-gradient(90deg, #407948 <?php echo $fillPercentage; ?>%, lightgray <?php echo (100 - $fillPercentage); ?>%);"></div>
+                                        <?php endfor; ?>
+                                        <p>(<?= htmlspecialchars($ratings[$recipe['id']]['count']); ?>)</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php else: ?>
+                <p class="not-found">Нічого не знайдено.</p>
+            <?php endif; ?>
+         </section>
+        
     </main>
 
 
