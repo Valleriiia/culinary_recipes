@@ -160,7 +160,11 @@ class User {
     public function getRecipeRating($recipeId) {
         $stmt = $this->pdo->prepare("SELECT AVG(rating) as average, COUNT(rating) as count FROM reviews WHERE id_recipe = ?");
         $stmt->execute([$recipeId]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        $ratingData = $stmt->fetch(PDO::FETCH_ASSOC);
+        return [
+            'average' => round($ratingData['average'], 1), 
+            'count' => (int)$ratingData['count'] 
+        ];
     }
     
 }

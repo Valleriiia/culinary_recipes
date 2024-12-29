@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&display=swap" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&display=swap');
-        
+
         .recipes-list {
             display: flex;
             flex-wrap: wrap;
@@ -77,25 +77,39 @@
             gap: 5px;
         }
 
+        .rating {
+            display: flex;
+            gap: 5px;
+        }
+
         .star {
             width: 24px;
             height: 24px;
+            background: lightgray;
             -webkit-mask: url('../../svg/Star.svg') no-repeat center;
             mask: url('../../svg/Star.svg') no-repeat center;
             -webkit-mask-size: contain;
             mask-size: contain;
-            background: lightgray;
         }
 
         .star.filled {
-            background: gold;
+            background: #407948;
+        }
+
+        .star.half {
+            background: linear-gradient(90deg, #407948 50%, lightgray 50%);
+        }
+
+        .rating span {
+            vertical-align: text-bottom;
+            font-size: 18px;
+            margin-top: 3px;
         }
 
         .not-found {
             font-size: 30px;
             text-align: center;
         }
-
 
         section {
             display: flex;
@@ -104,7 +118,6 @@
             width: 100%;
             padding: 10px 0;
         }
-
 
         .remove-favorite-icon {
             width: 60px;
@@ -120,7 +133,6 @@
             flex: 1;
             margin-top: -75px; 
         }
-
     </style>
 </head>
 <body>
@@ -176,11 +188,24 @@
                             <h4><?= htmlspecialchars($recipe['name']); ?></h4>
                             <p class="cooking-time">Час приготування: <?= $recipe['cooking_time']; ?> хв</p>
                             <div class="rating">
-                                    <?php for ($i = 1; $i <= 5; $i++): ?>
-                                  <?php $fillPercentage = ($ratings[$recipe['id']]['average'] >= $i) ? 100 : 0; ?>
-                                       <div class="star" style="background: linear-gradient(90deg, #407948 <?php echo $fillPercentage; ?>%, lightgray <?php echo (100 - $fillPercentage); ?>%);"></div>
-                                    <?php endfor; ?>
-                                <p>(<?= htmlspecialchars($ratings[$recipe['id']]['count']); ?>)</p>
+                                <?php 
+                                $rating = $userController->getRecipeRating($recipe['id']);
+                                $averageRating = $rating['average'];
+                                $ratingCount = $rating['count'];
+
+                                for ($i = 1; $i <= 5; $i++): 
+                                    $fillPercentage = 0;
+                                    if ($averageRating >= $i) {
+                                        $fillPercentage = 100;
+                                    } elseif ($averageRating >= $i - 0.5) {
+                                        $fillPercentage = 50;
+                                    } else {
+                                        $fillPercentage = 0;
+                                    }
+                                ?>
+                                    <div class="star" style="background: linear-gradient(90deg, #407948 <?= $fillPercentage; ?>%, lightgray <?= (100 - $fillPercentage); ?>%);"></div>
+                                <?php endfor; ?>
+                                <span>(<?= htmlspecialchars($ratingCount); ?>)</span>
                             </div>
                         </div>
                     </a>
@@ -197,82 +222,33 @@
     </footer>
 
     <script>
-        const stars = document.querySelectorAll('.rating .star');
-        const ratingInput = document.getElementById('rating');
+        document.querySelectorAll('.remove-favorite-icon').forEach(icon => {
+            icon.addEventListener('click', function (event) {
+                event.preventDefault(); 
 
-        stars.forEach((star) => {
-            star.addEventListener('click', () => {
-                const value = star.dataset.value;
-                ratingInput.value = value;
+                const recipeId = this.closest('form').querySelector('input[name="recipe_id"]').value;
+                const formData = new FormData();
+                formData.append('recipe_id', recipeId);
+                formData.append('remove_favorite', true);
 
-                stars.forEach(s => s.classList.remove('selected'));
-                for (let i = 0; i < value; i++) {
-                    stars[i].classList.add('selected');
-                }
-            });
-
-            star.addEventListener('mouseover', () => {
-                stars.forEach(s => s.classList.remove('hover'));
-                for (let i = 0; i < star.dataset.value; i++) {
-                    stars[i].classList.add('hover');
-                }
-            });
-
-            star.addEventListener('mouseout', () => {
-                stars.forEach(s => s.classList.remove('hover'));
-            });
-        });
-        document.querySelectorAll('.favorite-btn').forEach(button => {
-        button.addEventListener('click', function(event) {
-            event.preventDefault(); 
-
-            const form = this.closest('form');
-            const formData = new FormData(form);
-
-            fetch(form.action, {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json()) 
-            .then(data => {
-                if (data.success) {
-                    form.closest('li').remove();
-                } else {
-                    alert('Сталася помилка при видаленні рецепту.');
-                }
-            })
-            .catch(error => console.error('Error:', error));
-        });
-    });
-         document.querySelectorAll('.remove-favorite-icon').forEach(icon => {
-        icon.addEventListener('click', function (event) {
-            event.preventDefault(); 
-
-            const recipeId = this.closest('form').querySelector('input[name="recipe_id"]').value;
-            const formData = new FormData();
-            formData.append('recipe_id', recipeId);
-            formData.append('remove_favorite', true);
-
-
-            fetch('favorites.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json()) 
-            .then(data => {
-                if (data.success) {
-                    this.closest('li').remove();
-                } else {
-                    alert('Сталася помилка при видаленні рецепту: ' + data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Сталася помилка.');
+                fetch('favorites.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json()) 
+                .then(data => {
+                    if (data.success) {
+                        this.closest('li').remove();
+                    } else {
+                        alert('Сталася помилка при видаленні рецепту: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Сталася помилка.');
+                });
             });
         });
-    });
     </script>
-    <script src="/js/scripts.js"></script>
 </body>
 </html>
