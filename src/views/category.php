@@ -22,7 +22,7 @@
                 <div class="nav-icons">
                      <div class="dropdown">
                             <?php if (isset($isLoggedIn) && $isLoggedIn): ?>
-                                <a href="#" class="dropdown-toggle" title="Перехід до збережених рецептів" id="openFavoritesPage">
+                                <a href="../public/favorites.php" class="dropdown-toggle" title="Перехід до збережених рецептів" id="openFavoritesPage">
                                     <img src="../svg/2.svg" height="42">
                                 </a>
                                 <a href="#" class="dropdown-toggle" title="Перехід до профілю користувача" id="openUserPage">

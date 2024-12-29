@@ -83,6 +83,7 @@ li {
 
 .recipes-list a {
     text-decoration: none;
+    color: var(--text-color);
 }
 
 .recipes-list a:visited {
@@ -101,7 +102,7 @@ li {
     border-radius: 10px;
     overflow: hidden;
     margin-bottom: 10px;
-    text-align: end;
+    text-align: right;
     padding: 14px;
 }
 
@@ -148,8 +149,7 @@ section {
 .favorite-btn {
     background: none;
     border: none;
-    cursor: pointer;
-    margin-left: 330px;         
+    cursor: pointer;       
 }
 .favorite-btn img {
     width: 60px; 
