@@ -4,103 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kitchen Tales</title>
-    <link rel="stylesheet" href="/public/css/style.css">
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        html, body {
-            height: 100%; 
-            overflow-x: hidden;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0; 
-            color: #000000; 
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between; 
-            margin: 0;
-            zoom: 1.1;
-        }
-
-        main {
-            flex: 1;
-        }
-
-        .login-btn {
-            background-color: #2F5333; 
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: background-color 0.3s ease;
-        }
-
-        .login-btn:hover {
-            background-color: #345d41; 
-        }
-
-        .logout-form {
-            display: inline-block;
-        }
-
-        .hero-section {
-            position: relative;
-            text-align: center;
-            padding: 40px 20px;
-            color: white;
-            height: 55vh;
-        }
-
-        .hero-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('/images/Food.jpg') no-repeat center center/cover;
-            z-index: -1;
-            opacity: 1;
-        }
-
-        .hero-section .darkener-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('/images/Darkener.png') no-repeat center center/cover;
-            z-index: -1;
-        }
-
-        .hero-section h1 {
-            font-size: 32px;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-            margin-top: 60px;
-        }
-
-        .hero-section .search-bar {
-            display: inline-block;
-            width: 80%;
-            max-width: 600px;
-            padding: 10px;
-            border: 2px solid #ccc;
-            border-radius: 30px;
-            background-color: white;
-            margin-top: 30px;
-        }
-
-        .hero-section .search-bar input {
-            width: 100%;
-            padding: 12px 20px;
-            border-radius: 20px;
-            border: 1px solid #ddd;
-        }
+    
 
     </style>
 </head>
@@ -108,7 +16,7 @@
     <header>
         <div class="navbar">
             <a href="#" class="logo">
-                <img src="\images\LOGO.png" alt="Кошик" width="115" height="60">
+                <img src="../images/LOGO.png" alt="Кошик" height="90">
             </a>
             <nav class="main-nav">
                 <a href="#">Рецепти</a>
@@ -120,10 +28,10 @@
                      <div class="dropdown">
                             <?php if (isset($isLoggedIn) && $isLoggedIn): ?>
                                 <a href="/public/favorites.php" class="dropdown-toggle" title="Перехід до збережених рецептів" id="openFavoritesPage">
-                                    <img src="/svg/2.svg" width="40" height="30">
+                                    <img src="../svg/2.svg" height="42">
                                 </a>
                                 <a href="#" class="dropdown-toggle" title="Перехід до профілю користувача" id="openUserPage">
-                                    <img src="svg/1.svg" width="40" height="30">
+                                    <img src="../svg/1.svg" height="42">
                                 </a>
                                 <div class="dropdown-menu">
                                     <a href="/public/user.php" class="dropdown-item">Мій профіль</a> 
@@ -145,26 +53,36 @@
     </header>
 
     <div class="hero-section">
-        <h1>Заряджайте своє тіло та душу – знаходьте рецепти, що неймовірно смакують!</h1>
-        <div class="search-bar">
-            <input type="text" placeholder="Пошук за стравою, інгредієнтами...">
-        </div>
+        <h1>Заряджайте своє тіло та душу – <br> знаходьте рецепти, що неймовірно смакують!</h1>
+        <form action="../public/search.php" method="GET">
+            <input class="search-input" type="search" name="q" autocomplete="off" placeholder="Пошук за стравою, інгредієнтами...">
+            <button type="submit" hidden></button>
+        </form>
         <div class="darkener-overlay"></div>
     </div>
 
     <main>
-        <p>Ласкаво просимо на сайт!</p>
-        <ul>
-    <?php if (!empty($categories)): ?>
-        <?php foreach ($categories as $category): ?>
-            <li>
-                <a href="public/category.php?id=<?= $category['id']; ?>"><?= htmlspecialchars($category['name']); ?></a>
-            </li>
-        <?php endforeach; ?>
-    <?php else: ?>
-        <p>Категорій не знайдено.</p>
-    <?php endif; ?>
-</ul>
+        <h2 class="search-heading">Категорії рецептів</h2>
+        <div class="categories-list">
+            <ul>
+                <?php if (!empty($categories)): ?>
+                    <?php foreach ($categories as $category): ?>
+                        <li>
+                            <a href="category.php?id=<?= $category['id']; ?> ">
+                                <div class="category-container" style="background:  url('../images/Darkener.png'), url('../images/<?php echo htmlspecialchars($category['category_photo']) ?>');">
+                                    <p class="category-name"><?= htmlspecialchars($category['name']); ?></p>
+                                    <p class="description"><?php echo htmlspecialchars($category['description']); ?></p>
+                                </div>
+                                
+                            </a>
+                        </li>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <p>Категорій не знайдено.</p>
+                <?php endif; ?>
+            </ul>
+        </div>
+        
     </main>
 
     <script>

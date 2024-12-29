@@ -33,12 +33,14 @@ class Category {
     // Отримати інгредієнти, які використовуються в рецептах цієї категорії
     public function getIngredientsByCategory($categoryId) {
         $stmt = $this->pdo->prepare("
-            SELECT DISTINCT i.id, i.name 
-            FROM ingredients i
-            JOIN recipes_ingredients ri ON i.id = ri.id_ingredient
-            JOIN recipes r ON ri.id_recipe = r.id
-            WHERE r.id_category = ? AND i.name <> 'Сіль' AND i.name <> 'Спеції' AND i.name <> 'Перець горошком'
-            ORDER BY i.name
+        SELECT i.id, i.name, i.category, COUNT(ri.id_recipe) AS ingredient_frequency, 
+       SUM(COUNT(ri.id_recipe)) OVER (PARTITION BY i.category) AS category_frequency
+FROM ingredients i
+JOIN recipes_ingredients ri ON i.id = ri.id_ingredient
+JOIN recipes r ON ri.id_recipe = r.id
+WHERE r.id_category = ? AND i.name NOT IN ('Сіль', 'Спеції', 'Перець горошком')
+GROUP BY i.id, i.name, i.category
+ORDER BY category_frequency DESC, ingredient_frequency DESC, i.name;
         ");
         $stmt->execute([$categoryId]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

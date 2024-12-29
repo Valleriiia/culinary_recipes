@@ -87,7 +87,6 @@
                         <li>
                             <a href="../public/recipe.php?id=<?= $recipe['id']; ?>">
                                 <div class="image-container" style="background: linear-gradient(179.91deg, #1D1D1D -43.99%, rgba(29, 29, 29, 0) 23.35%), url('../images/<?php echo htmlspecialchars($recipe['photo']) ?>');">                  
-                                <section>
                                     <form id="favorite-form-<?= $recipe['id']; ?>" action="update_favorites.php" method="POST" onsubmit="return false;">
                                         <input type="hidden" name="recipe_id" value="<?= $recipe['id']; ?>">
                                         <button type="button" class="favorite-btn" onclick="toggleFavoriteIcon(this, <?= $recipe['id']; ?>)">
@@ -98,7 +97,6 @@
                                             <?php endif; ?>
                                         </button>
                                     </form>
-                                </section>
                                 </div>
                                 <div class="recipe-details">
                                     <h4><?= htmlspecialchars($recipe['name']); ?></h4>
