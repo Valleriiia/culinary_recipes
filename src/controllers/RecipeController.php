@@ -4,12 +4,15 @@
 <?php
 
 include '../src/models/Recipe.php';
+include '../src/models/User.php';
 
 class RecipeController {
     private $recipeModel;
+    private $userModel;
 
     public function __construct($pdo) {
         $this->recipeModel = new Recipe($pdo);
+        $this->userModel = new User($pdo);
     }
 
     public function showCategory($categoryId) {
@@ -23,6 +26,7 @@ class RecipeController {
         $reviews = $this->recipeModel->getReviews($recipeId);
         $ingredients = $this->recipeModel->getIngredients($recipeId);
         $isLoggedIn = isset($_SESSION['user_name']); 
+        $user_photo = $this->userModel->getUserProfile($_SESSION['user_id']);
         include __DIR__ . '/../views/recipe.php';
     }
 

@@ -1,5 +1,6 @@
 <!-- // src/models/Recipe.php -->
 <?php
+
 class Recipe {
     private $pdo;
 
@@ -14,19 +15,43 @@ class Recipe {
     }
 
     public function getRecipeById($id) {
-        $stmt = $this->pdo->prepare("SELECT * FROM recipes WHERE id = ?");
+        $stmt = $this->pdo->prepare("SELECT *, DATE_FORMAT(date, '%Y-%m-%d') AS only_date FROM recipes WHERE id = ?");
         $stmt->execute([$id]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
+        $recipe = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+        // Перевірка, чи є дата
+        if (!empty($recipe['only_date'])) {
+            try {
+                // Створення об'єкта DateTime
+                $date = new DateTime($recipe['only_date']);
+    
+                // Налаштування IntlDateFormatter
+                $formatter = new IntlDateFormatter(
+                    'uk_UA',               // Локаль
+                    IntlDateFormatter::LONG, // Формат дати
+                    IntlDateFormatter::NONE  // Формат часу
+                );
+                $formatter->setPattern('LLLL d, yyyy'); // Формат: Грудень 25, 2024
+    
+                // Форматування дати
+                $recipe['only_date'] = $formatter->format($date);
+            } catch (Exception $e) {
+                // Логування або обробка помилки
+                $recipe['only_date'] = 'Невірний формат дати';
+            }
+        }
+    
+        return $recipe;
+    }    
 
     public function getRatings($recipeId) {
-        $stmt = $this->pdo->prepare("SELECT AVG(rating) as average, COUNT(rating) as count FROM reviews WHERE id_recipe = ?");
+        $stmt = $this->pdo->prepare("SELECT ROUND(AVG(rating), 1) as average, COUNT(rating) as count FROM reviews WHERE id_recipe = ?");
         $stmt->execute([$recipeId]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
     
     public function getReviews($recipeId) {
-        $stmt = $this->pdo->prepare("SELECT r.text, u.name, r.rating, r.date FROM reviews r JOIN users u ON r.id_user = u.id WHERE r.id_recipe = ? ORDER BY r.date DESC");
+        $stmt = $this->pdo->prepare("SELECT r.text, u.name, u.profile_photo, r.rating, DATE_FORMAT(r.date, '%d/%m/%Y') AS only_date FROM reviews r JOIN users u ON r.id_user = u.id WHERE r.id_recipe = ? ORDER BY r.text IS NULL, r.date DESC");
         $stmt->execute([$recipeId]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
