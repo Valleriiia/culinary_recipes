@@ -86,8 +86,19 @@
                     <?php foreach ($recipes as $recipe): ?>
                         <li>
                             <a href="../public/recipe.php?id=<?= $recipe['id']; ?>">
-                                <div class="image-container" style="background: linear-gradient(179.91deg, #1D1D1D -43.99%, rgba(29, 29, 29, 0) 23.35%), url('../images/<?php echo htmlspecialchars($recipe['photo']) ?>');">
-                                    <div class="save-button"><img src="../svg/5.svg" alt="save"></div>
+                                <div class="image-container" style="background: linear-gradient(179.91deg, #1D1D1D -43.99%, rgba(29, 29, 29, 0) 23.35%), url('../images/<?php echo htmlspecialchars($recipe['photo']) ?>');">                  
+                                <section>
+                                    <form id="favorite-form-<?= $recipe['id']; ?>" action="update_favorites.php" method="POST" onsubmit="return false;">
+                                        <input type="hidden" name="recipe_id" value="<?= $recipe['id']; ?>">
+                                        <button type="button" class="favorite-btn" onclick="toggleFavoriteIcon(this, <?= $recipe['id']; ?>)">
+                                            <?php if ($isRecipeAdded): ?>
+                                                <img src="../svg/6.svg" alt="Видалити з обраного" class="favorite-icon">
+                                            <?php else: ?>
+                                                <img src="../svg/5.svg" alt="Додати в обране" class="favorite-icon">
+                                            <?php endif; ?>
+                                        </button>
+                                    </form>
+                                </section>
                                 </div>
                                 <div class="recipe-details">
                                     <h4><?= htmlspecialchars($recipe['name']); ?></h4>
@@ -110,6 +121,90 @@
          </section>
         
     </main>
+
+    <script>
+        const icons = document.querySelectorAll('.toggle-color');
+
+        icons.forEach(icon => {
+            icon.addEventListener('click', (event) => {
+                event.preventDefault();
+                icon.classList.toggle('active');
+            });
+        });
+
+        function submitFavoriteForm(recipeId) {
+            const form = document.getElementById('favorite-form-' + recipeId);
+            const formData = new FormData(form);
+
+            fetch(form.action, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Помилка при відправці форми:', error);
+            });
+        }
+
+        document.querySelector('.save-button').addEventListener('click', function(event) {
+            event.preventDefault();
+
+            const form = document.getElementById('favorite-form');
+            const formData = new FormData(form);
+
+            fetch(form.action, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Помилка при відправці форми:', error);
+            });
+        });
+
+        function toggleFavoriteIcon(button, recipeId) {
+            const icon = button.querySelector('.favorite-icon');
+            const form = document.getElementById('favorite-form-' + recipeId);
+            const formData = new FormData(form);
+            event.preventDefault();
+
+            if (icon.src.includes('5.svg')) {
+                icon.src = "../svg/6.svg"; 
+            } else {
+                icon.src = "../svg/5.svg"; 
+            }
+
+            fetch(form.action, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    console.log(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Помилка при відправці форми:', error);
+            });
+        }
+    </script>
 
 
     <script src="/js/scripts.js"></script>

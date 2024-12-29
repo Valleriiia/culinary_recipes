@@ -65,6 +65,10 @@ class UserController {
         return $this->userModel->isRecipeInFavorites($userId, $recipeId);
     }
 
+    public function getRecipeRating($recipeId) {
+        return $this->userModel->getRecipeRating($recipeId);
+    }
+    
     public function logout() {
         session_unset();
         session_destroy();
