@@ -238,20 +238,20 @@ h3 {
   padding-bottom: 4px;
 }
 .enter-rating .enter-star {
-    font-size: 48px;
-    line-height: 48px;
-    color: #ADB9AE;
-    cursor: pointer;
-  }
+  font-size: 48px;
+  line-height: 48px;
+  color: #ADB9AE;
+  cursor: pointer;
+}
 
-  .enter-rating {
-    margin-bottom: 40px;
-  }
+.enter-rating {
+  margin-bottom: 40px;
+}
 
-  .enter-rating .enter-star.selected,
-  .enter-rating .enter-star.hover {
-    color: #407948;
-  }
+.enter-rating .enter-star.selected,
+.enter-rating .enter-star.hover {
+  color: #407948;
+}
 
 .comment {
   font-family:  'Poppins', Arial, sans-serif;

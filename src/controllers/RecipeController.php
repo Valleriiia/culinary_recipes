@@ -26,7 +26,9 @@ class RecipeController {
         $reviews = $this->recipeModel->getReviews($recipeId);
         $ingredients = $this->recipeModel->getIngredients($recipeId);
         $isLoggedIn = isset($_SESSION['user_name']); 
-        $user_photo = $this->userModel->getUserProfile($_SESSION['user_id']);
+        if ($isLoggedIn) {
+            $user_photo = $this->userModel->getUserProfile($_SESSION['user_id']);
+        }
         include __DIR__ . '/../views/recipe.php';
     }
 

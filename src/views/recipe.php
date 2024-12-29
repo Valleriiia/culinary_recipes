@@ -6,6 +6,10 @@
     <title><?= htmlspecialchars($recipe['name']); ?></title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/recipes.css">
+    <script>
+        // Передаємо змінну з PHP до JS
+        const isLoggedIn = <?php echo json_encode($isLoggedIn); ?>;
+    </script>
 </head>
 <body>
     <header>
@@ -29,15 +33,15 @@
                                     <img src="../svg/1.svg" height="42">
                                 </a>
                                 <div class="dropdown-menu">
-                                    <a href="/public/user.php" class="dropdown-item">Мій профіль</a> 
+                                    <a href="../public/user.php" class="dropdown-item">Мій профіль</a> 
                                     <a href="#" class="dropdown-item" id="logout-link">Вийти</a>
                                 </div>
-                                <form id="logout-form" action="/logout.php" method="POST" style="display: none;">
+                                <form id="logout-form" action="../public/logout.php" method="POST" style="display: none;">
                                     <input type="hidden" name="logout" value="true">
                                 </form>
                             </div>
                         <?php else: ?>
-                            <form action="public/login.php" method="get">
+                            <form action="../public/login.php" method="get">
                                 <button type="submit" class="login-btn">Вхід/Реєстрація</button>
                             </form>
                         <?php endif; ?>
@@ -112,9 +116,9 @@
                     <?php endfor; ?>
                     <p> <?= htmlspecialchars($ratings['average']); ?></p>
                 </div>
-                <form class="review-form" action="/public/add_review.php" method="POST">
+                <form id="review-form" class="review-form" action="../public/add_review.php" method="POST">
                     <input type="hidden" name="recipe_id" value="<?= $recipe['id']; ?>">
-                    <img src="..<?= htmlspecialchars($user_photo); ?>" alt="profile_photo">
+                    <img src="..<?= htmlspecialchars($user_photo ?? "/images/default_profile.png") ; ?>" alt="profile_photo">
                     <div class="add">
                         <label for="rating">Ваша оцінка:<span>(обов'язково)</span></label>
                         <div class="enter-rating">
@@ -124,7 +128,7 @@
                             <span class="enter-star" data-value="4">&#9733;</span>
                             <span class="enter-star" data-value="5">&#9733;</span>
                         </div>
-                        <input type="hidden" name="rating" id="rating" value="0" required>
+                        <input type="hidden" name="rating" id="enter-rating" value="0" required>
 
                         <label for="comment">Ваш відгук:<span>(необов'язково)</span></label> <br/>
                         <textarea class="comment" name="comment" placeholder="Поділіться своєю любов'ю! Розкажіть нам, що ви думаєте про рецепт, у короткому відгуку."></textarea>
@@ -133,7 +137,7 @@
                         </div>
                     </div>
                 </form>
-                
+                <div id="review-message" style="display: none;"></div>
             </div>
             <div class="reviews-list">
                 <?php if (!empty($reviews)): ?>
@@ -165,6 +169,8 @@
         <p>&copy; <?= date('Y'); ?> Ваш кулінарний сайт</p>
     </footer>
     <script>
+       
+
     const stars = document.querySelectorAll('.enter-rating .enter-star');
     const ratingInput = document.getElementById('enter-rating');
 
@@ -190,6 +196,79 @@
             stars.forEach(s => s.classList.remove('hover'));
         });
     });
+
+    document.getElementById('review-form').addEventListener('submit', function (e) {
+    e.preventDefault(); // Зупиняємо стандартну поведінку відправки форми
+    
+    const form = e.target;
+    const formData = new FormData(form);
+    const messageBox = document.getElementById('review-message');
+    const reviewsList = document.querySelector('.reviews-list ul');
+
+    if (!isLoggedIn) {
+            alert("Ви не ввійшли у свій акаунт!");
+            return;
+        }
+
+
+    fetch(form.action, {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            messageBox.style.display = 'block';
+            messageBox.style.color = 'green';
+            messageBox.textContent = 'Ваш відгук успішно додано!';
+            form.reset();
+
+            const review = data.review;
+            const newReviewHTML = `
+                <li class="review-container">
+                    <img src="..${review.profile_photo}" alt="profile_photo">
+                    <div class="review">
+                        <p class="user-name">${review.name}</p>
+                        <div class="rating">
+                            ${'<div class="star" style="background: #407948"></div>'.repeat(review.rating)}
+                            ${'<div class="star" style="background: #ADB9AE"></div>'.repeat(5 - review.rating)}
+                            <p class="review-date">${review.only_date}</p>
+                        </div>
+                        <p class="review-text">${review.text || ''}</p>
+                    </div>
+                </li>
+            `;
+
+            if (reviewsList) {
+                reviewsList.insertAdjacentHTML('afterbegin', newReviewHTML);
+                location.reload();
+            } else {
+                const noReviewsText = document.querySelector('.no-reviews');
+                if (noReviewsText) {
+                    noReviewsText.remove();
+                }
+                const newList = document.createElement('ul');
+                newList.innerHTML = newReviewHTML;
+                document.querySelector('.reviews-list').appendChild(newList);
+                location.reload();
+            }
+        } else {
+            messageBox.style.display = 'block';
+            messageBox.style.color = 'red';
+            messageBox.textContent = data.error || 'Виникла помилка. Спробуйте ще раз.';
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        location.reload();
+    });
+});
+
+document.querySelector('#logout-link').addEventListener('click', function(e) {
+        e.preventDefault();  
+        document.querySelector('#logout-form').submit();  
+    });
+
 </script>
 </body>
 </html>
