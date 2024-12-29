@@ -13,11 +13,6 @@
             <a href="index.php" class="logo">
                 <img src="../images/LOGO.png" alt="Кошик" height="90">
             </a>
-            <nav class="main-nav">
-                <a href="#">Рецепти</a>
-                <a href="#">Інгредієнти</a>
-                <a href="#">Страви</a>
-            </nav>
             <div class="right-nav">
                 <div class="nav-icons">
                      <div class="dropdown">
@@ -29,15 +24,15 @@
                                     <img src="../svg/1.svg" height="42">
                                 </a>
                                 <div class="dropdown-menu">
-                                    <a href="/public/user.php" class="dropdown-item">Мій профіль</a> 
+                                    <a href="../public/user.php" class="dropdown-item">Мій профіль</a> 
                                     <a href="#" class="dropdown-item" id="logout-link">Вийти</a>
                                 </div>
-                                <form id="logout-form" action="/logout.php" method="POST" style="display: none;">
+                                <form id="logout-form" action="../public/logout.php" method="POST" style="display: none;">
                                     <input type="hidden" name="logout" value="true">
                                 </form>
                             </div>
                         <?php else: ?>
-                            <form action="public/login.php" method="get">
+                            <form action="../public/login.php" method="get">
                                 <button type="submit" class="login-btn">Вхід/Реєстрація</button>
                             </form>
                         <?php endif; ?>
@@ -76,7 +71,7 @@
             <?php endforeach; ?>
             </div>
             <button class="filter-button" type="submit">Застосувати фільтри</button>
-            <a href="/public/category.php?id=<?= htmlspecialchars($category['id']); ?>" style="margin-left: 10px;">Скинути фільтри</a>
+            <a href="../public/category.php?id=<?= htmlspecialchars($category['id']); ?>" style="margin-left: 10px;">Скинути фільтри</a>
         </form>
         </aside>
         <!-- Відображення страв -->

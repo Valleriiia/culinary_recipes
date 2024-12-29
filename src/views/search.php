@@ -13,16 +13,11 @@
             <a href="index.php" class="logo">
                 <img src="../images/LOGO.png" alt="Кошик" height="90">
             </a>
-            <nav class="main-nav">
-                <a href="#">Рецепти</a>
-                <a href="#">Інгредієнти</a>
-                <a href="#">Страви</a>
-            </nav>
             <div class="right-nav">
                 <div class="nav-icons">
                      <div class="dropdown">
                             <?php if (isset($isLoggedIn) && $isLoggedIn): ?>
-                                <a href="#" class="dropdown-toggle" title="Перехід до збережених рецептів" id="openFavoritesPage">
+                                <a href="../public/user.php" class="dropdown-toggle" title="Перехід до збережених рецептів" id="openFavoritesPage">
                                     <img src="../svg/2.svg" height="42">
                                 </a>
                                 <a href="#" class="dropdown-toggle" title="Перехід до профілю користувача" id="openUserPage">
@@ -32,7 +27,7 @@
                                     <a href="../public/user.php" class="dropdown-item">Мій профіль</a> 
                                     <a href="#" class="dropdown-item" id="logout-link">Вийти</a>
                                 </div>
-                                <form id="logout-form" action="/logout.php" method="POST" style="display: none;">
+                                <form id="logout-form" action="../public/logout.php" method="POST" style="display: none;">
                                     <input type="hidden" name="logout" value="true">
                                 </form>
                             </div>
@@ -86,6 +81,6 @@
     </main>
     
 
-    <a class="return" href="/public/index.php">Повернутися на головну</a>
+    <a class="return" href="../public/index.php">Повернутися на головну</a>
 </body>
 </html>
