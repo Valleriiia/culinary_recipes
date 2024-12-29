@@ -11,12 +11,46 @@ if (!isset($_SESSION['user_name'])) {
 }
 
 $userId = $_SESSION['user_id'];
-$message = ''; 
-$messageType = null; 
+$message = '';
+$messageType = null;
+
+// Перевірка, чи рецепт вже додано в обране
+$recipeId = $recipe['id'];
+$stmt = $pdo->prepare("SELECT COUNT(*) FROM favorites WHERE id_user = ? AND id_recipe = ?");
+$stmt->execute([$userId, $recipeId]);
+$isFavorite = $stmt->fetchColumn() > 0;
+$icon = $isFavorite ? '6.svg' : '5.svg';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['logout'])) {
+        $userController->logout();
+        header('Location: login.php');
+        exit;
+    }
 
-    // Оновлення профілю
+    if (isset($_POST['toggle_favorite'])) {
+        $recipeId = $_POST['recipe_id'] ?? null;
+
+        if ($recipeId && $userId) {
+            $stmt = $pdo->prepare("SELECT COUNT(*) FROM favorites WHERE id_user = ? AND id_recipe = ?");
+            $stmt->execute([$userId, $recipeId]);
+            $isFavorite = $stmt->fetchColumn() > 0;
+
+            if ($isFavorite) {
+                $stmt = $pdo->prepare("DELETE FROM favorites WHERE id_user = ? AND id_recipe = ?");
+                $stmt->execute([$userId, $recipeId]);
+                $message = "Рецепт видалено з обраного.";
+            } else {
+                $stmt = $pdo->prepare("INSERT INTO favorites (id_user, id_recipe) VALUES (?, ?)");
+                $stmt->execute([$userId, $recipeId]);
+                $message = "Рецепт додано в обране.";
+            }
+
+            echo json_encode(['success' => true, 'message' => $message]);
+            exit;
+        }
+    }
+
     if (isset($_POST['update_profile'])) {
         $newUsername = trim($_POST['new_username']);
         $currentProfilePhoto = $userController->getUserProfile($userId);
@@ -48,21 +82,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (empty($message)) {
             $message = $userController->updateUserProfile($userId, $newUsername, $profilePhotoPath);
-            $_SESSION['user_name'] = $newUsername; 
-            $messageType = 'success'; 
+            $_SESSION['user_name'] = $newUsername;
+            $messageType = 'success';
             header('Location: user.php');
             exit;
         }
     }
 
-    // Зміна паролю
     if (isset($_POST['change_password'])) {
         $currentPassword = $_POST['current_password'];
         $newPassword = $_POST['new_password'];
         $confirmPassword = $_POST['confirm_password'];
 
         if (empty($currentPassword) || empty($newPassword) || empty($confirmPassword)) {
-            $message = "Усі поля обов'язкові для заповнення.";
+            $message = "Всі поля обов'язкові для заповнення.";
             $messageType = 'error';
         } elseif ($newPassword !== $confirmPassword) {
             $message = "Паролі не співпадають!";
@@ -70,38 +103,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             $message = $userController->changeUserPassword($userId, $currentPassword, $newPassword);
             $messageType = $message === 'Пароль успішно змінено!' ? 'success' : 'error';
-            $passwordChangedSuccessfully = true; // або false, залежно від логіки зміни пароля
-
         }
     }
 
-    // Логаут
-    if (isset($_POST['logout'])) {
-        $userController->logout();
-        header('Location: login.php');
-        exit;
-    }
+    if (isset($_GET['recipe_id'])) {
+        $recipeId = $_GET['recipe_id'];
+        $ratingData = $userController->getRecipeRating($recipeId);
 
-    // Робота з обраними рецептами
-    if (isset($_POST['toggle_favorite'])) {
-        $recipeId = $_POST['recipe_id'] ?? null;
-        $isFavorite = false;
+        if ($ratingData) {
+            $averageRating = $ratingData['average'] ?? 0;
+            $reviewCount = $ratingData['count'] ?? 0;
 
-        if ($recipeId && $userId) {
-            $stmt = $pdo->prepare("SELECT COUNT(*) FROM favorites WHERE id_user = ? AND id_recipe = ?");
-            $stmt->execute([$userId, $recipeId]);
-            $isFavorite = $stmt->fetchColumn() > 0;
-        }
-
-        if ($isFavorite) {
-            $stmt = $pdo->prepare("DELETE FROM favorites WHERE id_user = ? AND id_recipe = ?");
-            $stmt->execute([$userId, $recipeId]);
+            echo json_encode([
+                'success' => true,
+                'average_rating' => $averageRating,
+                'review_count' => $reviewCount
+            ]);
         } else {
-            $stmt = $pdo->prepare("INSERT INTO favorites (id_user, id_recipe) VALUES (?, ?)");
-            $stmt->execute([$userId, $recipeId]);
+            echo json_encode(['success' => false, 'message' => 'Не вдалося отримати рейтинг рецепта.']);
         }
-        header("Location: " . $_SERVER['REQUEST_URI']);
-        exit();
+        exit;
     }
 }
 

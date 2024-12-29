@@ -130,7 +130,8 @@ class User {
     public function getFavoriteRecipes($userId) {
         try {
             $stmt = $this->pdo->prepare("
-                SELECT r.* FROM recipes r
+                SELECT r.id, r.name, r.photo, r.cooking_time, r.rating 
+                FROM recipes r
                 JOIN favorites f ON r.id = f.id_recipe
                 WHERE f.id_user = ?
             ");
@@ -155,4 +156,11 @@ class User {
             return false;
         }
     }
+
+    public function getRecipeRating($recipeId) {
+        $stmt = $this->pdo->prepare("SELECT AVG(rating) as average, COUNT(rating) as count FROM reviews WHERE id_recipe = ?");
+        $stmt->execute([$recipeId]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    
 }

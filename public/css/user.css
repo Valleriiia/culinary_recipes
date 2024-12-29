@@ -1,6 +1,5 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
     color: #000000;
     overflow-y: auto;
     height: 95vh;
@@ -234,19 +233,6 @@ footer {
     pointer-events: none;
 }
 
-.nav-icons {
-    display: flex;
-    gap: 2px; 
-    padding-right: 40px;
-}
-
-.nav-icons a {
-    color: var(--text-color);
-    font-size: 2px; 
-    margin-right: 5px;
-    text-decoration: none;
-    border-bottom: none;
-}
 
 .dropdown {
     display: inline-block;

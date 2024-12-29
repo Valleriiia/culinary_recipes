@@ -113,13 +113,6 @@
                 <button type="submit">Додати оцінку</button>
             </form>
         </section>
-
-        <section>
-            <form action="/public/favorites.php" method="POST">
-                <input type="hidden" name="recipe_id" value="<?= $recipe['id']; ?>">
-                <button type="submit" name="add_favorite">Додати до улюбленого</button>
-            </form>
-        </section>
     </main>
 
     <footer>

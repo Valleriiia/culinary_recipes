@@ -10,4 +10,5 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 } else {
     echo "Невірний ID категорії.";
 }
+
 ?>
