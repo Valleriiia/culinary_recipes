@@ -9,14 +9,31 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&display=swap" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&display=swap');
-        footer {
+        html, body {
+        height: 100%;
+        margin: 0;
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+    }
+
+    main {
+        flex: 1;
+    }
+
+footer {
     background: #2F5333;
     color: white;
     text-align: center;
     padding: 15px 0;
     width: 100%;
-    margin-top: 13px;  
+    margin-top: 13px;
+    position: relative;
+    bottom: 0;
 }
+
         .recipes-list {
             display: flex;
             flex-wrap: wrap;
