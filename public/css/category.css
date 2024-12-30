@@ -144,3 +144,8 @@ h4 {
     height: 60px; 
 }
 
+.favorite-btn {
+    position: relative; 
+    left: 10px; 
+    cursor: pointer; 
+}
