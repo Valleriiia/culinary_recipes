@@ -28,6 +28,7 @@ class RecipeController {
         $isLoggedIn = isset($_SESSION['user_name']); 
         if ($isLoggedIn) {
             $user_photo = $this->userModel->getUserProfile($_SESSION['user_id']);
+            $isRecipeAdded = $this->userModel->isRecipeInFavorites($_SESSION['user_id'], $recipe['id']);
         }
         include __DIR__ . '/../views/recipe.php';
     }
