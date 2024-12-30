@@ -266,6 +266,71 @@ document.querySelector('#logout-link').addEventListener('click', function(e) {
         document.querySelector('#logout-form').submit();  
     });
 
+
+    function toggleFavoriteIcon(button, recipeId) {
+    // Элемент формы, связанный с кнопкой
+    const form = document.getElementById('favorite-form-' + recipeId);
+    const formData = new FormData(form);
+
+    // Переключение состояния кнопки
+    const buttonClass = button.classList.contains('save-button-selected') ? 'save-button' : 'save-button-selected';
+    const icon = button.querySelector('img');
+
+    // Обновляем стили и текст кнопки
+    if (buttonClass === 'save-button') {
+        button.classList.remove('save-button-selected');
+        button.classList.add('save-button');
+        icon.src = "../svg/7.svg"; // Иконка состояния "не сохранено"
+        button.innerHTML = '<img src="../svg/7.svg" alt="save-button"> ЗБЕРЕГТИ';
+    } else {
+        button.classList.remove('save-button');
+        button.classList.add('save-button-selected');
+        icon.src = "../svg/5.svg"; 
+        button.innerHTML = '<img src="../svg/checked.svg" alt="save-button-selected"> ЗБЕРЕЖЕНО';
+    }
+
+    fetch(form.action, {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            alert(data.error);
+        } else {
+            console.log(data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Помилка при відправці форми:', error);
+    });
+}
+
+function toggleFavoriteIcon(button, recipeId) {
+    const form = document.getElementById('favorite-form-' + recipeId);
+    const formData = new FormData(form);
+
+    button.classList.remove('save-button');
+    button.classList.add('save-button-selected');
+    button.style.backgroundColor = "#2F5333";  
+
+    fetch(form.action, {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            alert(data.error);
+        } else {
+            console.log(data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Помилка при відправці форми:', error);
+    });
+}
+
 </script>
 </body>
 </html>
