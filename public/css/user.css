@@ -1,5 +1,5 @@
 html, body {
-    overflow: hidden; /* Убирает ползунки на всей странице */
+    overflow: hidden; 
 
 }
 
@@ -38,14 +38,14 @@ html, body {
     position: sticky;
     top: 120px;
     height: 100vh;
-    overflow: hidden; /* Убирает ползунки по обеим осям */
+    overflow: hidden; 
 }
 
 .main-content {
     flex: 1;
     background: white;
     padding: 30px;
-    overflow: hidden; /* Убирает ползунки по обеим осям */
+    overflow: hidden; 
     height: 100vh;
 }
 

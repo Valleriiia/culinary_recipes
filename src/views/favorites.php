@@ -9,7 +9,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&display=swap" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&display=swap');
-
+        footer {
+    background: #2F5333;
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    width: 100%;
+    margin-top: 13px;  
+}
         .recipes-list {
             display: flex;
             flex-wrap: wrap;
@@ -218,6 +225,11 @@
     </footer>
 
     <script>
+        document.querySelector('#logout-link').addEventListener('click', function (event) {
+        event.preventDefault();
+        document.querySelector('#logout-form').submit();
+});
+
         document.querySelectorAll('.remove-favorite-icon').forEach(icon => {
             icon.addEventListener('click', function (event) {
                 event.preventDefault(); 
