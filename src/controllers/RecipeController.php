@@ -40,6 +40,14 @@ class RecipeController {
             $ratings[$result['id']] = $this->recipeModel->getRatings($result['id']);
         }
         $isLoggedIn = isset($_SESSION['user_name']); 
+        $isRecipesAdded = [];
+        foreach ($results as $result) {
+        if ($isLoggedIn) {
+            $isRecipesAdded[$result['id']] = $this->userModel->isRecipeInFavorites($_SESSION['user_id'], $result['id']);
+        } else {
+            $isRecipesAdded[$result['id']] = false;
+        }
+        }
         include __DIR__ . '/../views/search.php';
     }
 }
