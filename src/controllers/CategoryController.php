@@ -2,14 +2,17 @@
 
 include '../src/models/Category.php';
 include '../src/models/Recipe.php';
+include '../src/models/User.php';
 
 class CategoryController {
     private $categoryModel;
     private $recipeModel;
+    private $userModel;
 
     public function __construct($pdo) {
         $this->categoryModel = new Category($pdo);
         $this->recipeModel = new Recipe($pdo);
+        $this->userModel = new User($pdo);
     }
 
     // Отримує список усіх категорій для відображення на головній сторінці
@@ -30,6 +33,10 @@ class CategoryController {
             $ratings[$recipe['id']] = $this->recipeModel->getRatings($recipe['id']);
         }
         $isLoggedIn = isset($_SESSION['user_name']); 
+        $isRecipesAdded = [];
+        foreach ($recipes as $recipe) {
+            $isRecipesAdded[$recipe['id']] = $this->userModel->isRecipeInFavorites($_SESSION['user_id'], $recipe['id']);
+        }
         include __DIR__ . '/../views/category.php';
     }
 }

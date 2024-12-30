@@ -144,17 +144,17 @@ class User {
     }
     
     public function isRecipeInFavorites($userId, $recipeId) {
-        try {
+        // try {
             $stmt = $this->pdo->prepare("
                 SELECT COUNT(*) FROM favorites 
                 WHERE id_user = ? AND id_recipe = ?
             ");
             $stmt->execute([$userId, $recipeId]);
             return $stmt->fetchColumn() > 0;
-        } catch (PDOException $e) {
-            error_log('Помилка перевірки обраних рецептів: ' . $e->getMessage());
-            return false;
-        }
+        // } catch (PDOException $e) {
+        //     error_log('Помилка перевірки обраних рецептів: ' . $e->getMessage());
+        //     return false;
+        // }
     }
 
     public function getRecipeRating($recipeId) {
