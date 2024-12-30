@@ -65,9 +65,9 @@
         <p class="date"><?= htmlspecialchars($recipe['only_date']) ?></p>
         <img class="recipe-picture" src="../images/<?= htmlspecialchars($recipe['photo']); ?>" alt=<?= htmlspecialchars($recipe['name']); ?>>
         <div class="buttons-container">
-            <form action="/public/favorites.php" method="POST">
+            <form id="favorite-form-<?= $recipe['id']; ?>" action="update_favorites.php" method="POST" onsubmit="return false;">
                 <input type="hidden" name="recipe_id" value="<?= $recipe['id']; ?>">
-                <button class="save-button" type="submit" name="add_favorite">
+                <button class="<?= $isRecipeAdded ? "save-button" : "save-button-selected" ?>" type="button" name="add_favorite" onclick="toggleFavoriteIcon(this, <?= $recipe['id']; ?>)">
                     <img src="../svg/7.svg" alt="save-button"> ЗБЕРЕГТИ
                 </button>
             </form>
@@ -258,6 +258,8 @@
         location.reload();
     });
 });
+
+
 
 document.querySelector('#logout-link').addEventListener('click', function(e) {
         e.preventDefault();  
