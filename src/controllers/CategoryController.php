@@ -35,7 +35,11 @@ class CategoryController {
         $isLoggedIn = isset($_SESSION['user_name']); 
         $isRecipesAdded = [];
         foreach ($recipes as $recipe) {
+        if ($isLoggedIn) {
             $isRecipesAdded[$recipe['id']] = $this->userModel->isRecipeInFavorites($_SESSION['user_id'], $recipe['id']);
+        } else {
+            $isRecipesAdded[$recipe['id']] = false;
+        }
         }
         include __DIR__ . '/../views/category.php';
     }
