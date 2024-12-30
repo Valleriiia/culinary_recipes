@@ -70,7 +70,7 @@ footer {
             height: 290px;
             background-size: cover !important;
             background-repeat: no-repeat;
-            background-position: center;
+            background-position: center !important;
             border-radius: 10px;
             overflow: hidden;
             margin-bottom: 10px;
@@ -110,8 +110,8 @@ footer {
             width: 24px;
             height: 24px;
             background: lightgray;
-            -webkit-mask: url('../../svg/Star.svg') no-repeat center;
-            mask: url('../../svg/Star.svg') no-repeat center;
+            -webkit-mask: url('../svg/Star.svg') no-repeat center;
+            mask: url('../svg/Star.svg') no-repeat center;
             -webkit-mask-size: contain;
             mask-size: contain;
         }
