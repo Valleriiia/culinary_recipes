@@ -85,7 +85,7 @@
                                     <form id="favorite-form-<?= $recipe['id']; ?>" action="update_favorites.php" method="POST" onsubmit="return false;">
                                         <input type="hidden" name="recipe_id" value="<?= $recipe['id']; ?>">
                                         <button type="button" class="favorite-btn" onclick="toggleFavoriteIcon(this, <?= $recipe['id']; ?>)">
-                                            <?php if ($isRecipeAdded): ?>
+                                            <?php if ($isRecipesAdded[$recipe['id']]): ?>
                                                 <img src="../svg/6.svg" alt="Видалити з обраного" class="favorite-icon">
                                             <?php else: ?>
                                                 <img src="../svg/5.svg" alt="Додати в обране" class="favorite-icon">
