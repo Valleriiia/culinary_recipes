@@ -22,6 +22,12 @@
     main {
         flex: 1;
     }
+    
+    .recipes-list {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 75px; 
+}
 
 footer {
     background: #2F5333;
