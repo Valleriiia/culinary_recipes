@@ -1,11 +1,6 @@
-body {
-    font-family: Arial, sans-serif;
-    color: #000000;
-    overflow-y: auto;
-    height: 95vh;
-    margin: 0;
-    zoom: 1.1;
-    position: relative;
+html, body {
+    overflow: hidden; /* Убирает ползунки на всей странице */
+
 }
 
 .sub-menu {
@@ -32,7 +27,7 @@ body {
     margin: 0 auto;
     padding: 0;
     gap: 0;
-    min-height: calc(100vh - 120px);
+    height: 100vh;
 }
 
 .sidebar {
@@ -42,17 +37,18 @@ body {
     color: #2C3E50;
     position: sticky;
     top: 120px;
-    height: calc(100vh - 120px);
-    overflow-y: auto;
+    height: 100vh;
+    overflow: hidden; /* Убирает ползунки по обеим осям */
 }
 
 .main-content {
     flex: 1;
     background: white;
     padding: 30px;
-    overflow-y: auto;
-    height: calc(100vh - 120px);
+    overflow: hidden; /* Убирает ползунки по обеим осям */
+    height: 100vh;
 }
+
 
 .menu-title {
     font-size: 22px;
@@ -217,7 +213,7 @@ footer {
 
 .message {
     position: fixed;
-    bottom: 20px; 
+    bottom: 65px; 
     right: 20px;
     padding: 10px 20px;
     color: white;
@@ -226,6 +222,7 @@ footer {
     transition: opacity 0.3s ease-out;
     z-index: 1000;
     background-color: #2F5333; 
+    margin-top: 40px;
 }
 
 .message.hide {
@@ -267,3 +264,12 @@ footer {
     display: block;
     }
     
+    footer {
+        background: #2F5333;
+        color: white;
+        text-align: center;
+        padding: 15px 0;
+        width: 100%;
+        position: fixed; 
+         bottom: 0px;
+    }
