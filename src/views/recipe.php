@@ -67,7 +67,7 @@
         <div class="buttons-container">
             <form id="favorite-form-<?= $recipe['id']; ?>" action="update_favorites.php" method="POST" onsubmit="return false;">
                 <input type="hidden" name="recipe_id" value="<?= $recipe['id']; ?>">
-                <button class="<?= $isRecipeAdded ? "save-button" : "save-button-selected" ?>" type="button" name="add_favorite" onclick="toggleFavoriteIcon(this, <?= $recipe['id']; ?>)">
+                <button class="<?= $isRecipeAdded ? "save-button-selected" : "save-button" ?>" type="button" name="add_favorite" onclick="toggleFavoriteIcon(this, <?= $recipe['id']; ?>)">
                     <img src="../svg/7.svg" alt="save-button"> ЗБЕРЕГТИ
                 </button>
             </form>
@@ -285,8 +285,8 @@ document.querySelector('#logout-link').addEventListener('click', function(e) {
     } else {
         button.classList.remove('save-button');
         button.classList.add('save-button-selected');
-        icon.src = "../svg/5.svg"; 
-        button.innerHTML = '<img src="../svg/checked.svg" alt="save-button-selected"> ЗБЕРЕЖЕНО';
+        icon.src = "../svg/7.svg"; 
+        button.innerHTML = '<img src="../svg/7.svg" alt="save-button-selected"> ЗБЕРЕЖЕНО';
     }
 
     fetch(form.action, {
@@ -306,30 +306,6 @@ document.querySelector('#logout-link').addEventListener('click', function(e) {
     });
 }
 
-function toggleFavoriteIcon(button, recipeId) {
-    const form = document.getElementById('favorite-form-' + recipeId);
-    const formData = new FormData(form);
-
-    button.classList.remove('save-button');
-    button.classList.add('save-button-selected');
-    button.style.backgroundColor = "#2F5333";  
-
-    fetch(form.action, {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.error) {
-            alert(data.error);
-        } else {
-            console.log(data.message);
-        }
-    })
-    .catch(error => {
-        console.error('Помилка при відправці форми:', error);
-    });
-}
 
 </script>
 </body>
