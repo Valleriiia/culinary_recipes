@@ -61,7 +61,8 @@ class Recipe {
             SELECT i.name AS name, ri.quantity AS quantity
             FROM recipes_ingredients ri
             JOIN ingredients i ON ri.id_ingredient = i.id
-            WHERE ri.id_recipe = ?;
+            WHERE ri.id_recipe = ?
+            ORDER BY i.name;
         ");
         $stmt->execute([$recipeId]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

@@ -4,8 +4,8 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Kitchen Tales - Редагувати профіль</title>
-	<link rel="stylesheet" href="/public/css/style.css">
-	<link rel="stylesheet" href="/public/css/user.css">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/user.css">
 	<link rel="stylesheet"
 		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
 		integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
@@ -63,11 +63,11 @@
 			<div id="edit-profile" class="tab-content active">
 				<h1 class="page-title">Редагувати профіль</h1>
 				<div class="profile-form">
-					<form action="/public/user.php" method="POST" enctype="multipart/form-data">
+					<form action="../public/user.php" method="POST" enctype="multipart/form-data">
 						<div class="form-section">
 							<h2>Фото профілю</h2>
 							<div class="photo-container">
-								<img id="profile-photo" src="<?php echo $profilePhotoUrl; ?>" alt="Фото профілю"
+								<img id="profile-photo" src="..<?php echo $profilePhotoUrl; ?>" alt="Фото профілю"
 									style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover;">
 								<div class="camera-icon">
 									<i class="fas fa-camera"></i>
@@ -98,7 +98,7 @@
 			<div id="account-settings" class="tab-content">
 				<h1 class="page-title">Налаштування акаунту</h1>
 				<div class="profile-form">
-					<form action="/public/user.php" method="POST">
+					<form action="../public/user.php" method="POST">
 						<div class="form-section">
 							<h2>Зміна паролю</h2>
 							<div class="form-row">

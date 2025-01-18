@@ -15,11 +15,7 @@ $message = '';
 $messageType = null;
 
 // Перевірка, чи рецепт вже додано в обране
-$recipeId = $recipe['id'];
-$stmt = $pdo->prepare("SELECT COUNT(*) FROM favorites WHERE id_user = ? AND id_recipe = ?");
-$stmt->execute([$userId, $recipeId]);
-$isFavorite = $stmt->fetchColumn() > 0;
-$icon = $isFavorite ? '6.svg' : '5.svg';
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['logout'])) {
